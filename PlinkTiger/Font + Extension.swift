@@ -15,6 +15,8 @@ extension UIFont {
     enum CustomFontStyle: String {
         case black = "-Black"
         case light = "-Light"
+        case bold = "-Bold"
+        case medium = "-Medium"
     }
     
     static func customFont(

@@ -25,53 +25,78 @@ class HomeView: UIView {
 
     private(set) lazy var playButtons: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(color:.darkGray), for: .normal)
+        button.setBackgroundImage(UIImage(color:.customDarkRed), for: .normal)
         button.setBackgroundImage(UIImage(color: UIColor.red), for: .highlighted)
         button.setTitle("Play".uppercased(), for: .normal)
+        button.setTitle("Play".uppercased(), for: .highlighted) // Повторяем для обоих состояний
         button.titleLabel?.font = UIFont.customFont(font: .lato, style: .light, size: 18)
         button.layer.cornerRadius = 8
         button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.borderColor = UIColor.customBrown.cgColor
         button.clipsToBounds = true
+        if let normalTitle = button.title(for: .normal), let highlightedTitle = button.title(for: .highlighted) {
+            let normalAttributedString = NSAttributedString(string: normalTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .light, size: 18)])
+            let highlightedAttributedString = NSAttributedString(string: highlightedTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .bold, size: 18)])
+            button.setAttributedTitle(normalAttributedString, for: .normal)
+            button.setAttributedTitle(highlightedAttributedString, for: .highlighted)
+        }
         return button
     }()
     
     private(set) lazy var getBonusButtons: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(color:.darkGray), for: .normal)
+        button.setBackgroundImage(UIImage(color:.customDarkRed), for: .normal)
         button.setBackgroundImage(UIImage(color: UIColor.red), for: .highlighted)
         button.setTitle("Get Bonus".uppercased(), for: .normal)
         button.titleLabel?.font = UIFont.customFont(font: .lato, style: .light, size: 18)
         button.layer.cornerRadius = 8
         button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.borderColor = UIColor.customBrown.cgColor
         button.clipsToBounds = true
+        if let normalTitle = button.title(for: .normal), let highlightedTitle = button.title(for: .highlighted) {
+            let normalAttributedString = NSAttributedString(string: normalTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .light, size: 18)])
+            let highlightedAttributedString = NSAttributedString(string: highlightedTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .bold, size: 18)])
+            button.setAttributedTitle(normalAttributedString, for: .normal)
+            button.setAttributedTitle(highlightedAttributedString, for: .highlighted)
+        }
         return button
     }()
     
     private(set) lazy var leadButtons: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(color:.darkGray), for: .normal)
+        button.setBackgroundImage(UIImage(color:.customDarkRed), for: .normal)
         button.setBackgroundImage(UIImage(color: UIColor.red), for: .highlighted)
         button.setTitle("leaderboard".uppercased(), for: .normal)
         button.titleLabel?.font = UIFont.customFont(font: .lato, style: .light, size: 18)
         button.layer.cornerRadius = 8
         button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.borderColor = UIColor.customBrown.cgColor
         button.clipsToBounds = true
+        if let normalTitle = button.title(for: .normal), let highlightedTitle = button.title(for: .highlighted) {
+            let normalAttributedString = NSAttributedString(string: normalTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .light, size: 18)])
+            let highlightedAttributedString = NSAttributedString(string: highlightedTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .bold, size: 18)])
+            button.setAttributedTitle(normalAttributedString, for: .normal)
+            button.setAttributedTitle(highlightedAttributedString, for: .highlighted)
+        }
         return button
     }()
 
     private(set) lazy var buyButtons: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(color:.darkGray), for: .normal)
+        button.setBackgroundImage(UIImage(color:.customDarkRed), for: .normal)
         button.setBackgroundImage(UIImage(color: UIColor.red), for: .highlighted)
         button.setTitle("buy emerald".uppercased(), for: .normal)
         button.titleLabel?.font = UIFont.customFont(font: .lato, style: .light, size: 18)
         button.layer.cornerRadius = 8
         button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.orange.cgColor
+        button.layer.borderColor = UIColor.customBrown.cgColor
         button.clipsToBounds = true
+        if let normalTitle = button.title(for: .normal), let highlightedTitle = button.title(for: .highlighted) {
+            let normalAttributedString = NSAttributedString(string: normalTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .light, size: 18)])
+            let highlightedAttributedString = NSAttributedString(string: highlightedTitle, attributes: [NSAttributedString.Key.font: UIFont.customFont(font: .lato, style: .bold, size: 18)])
+            button.setAttributedTitle(normalAttributedString, for: .normal)
+            button.setAttributedTitle(highlightedAttributedString, for: .highlighted)
+        }
         return button
     }()
     
