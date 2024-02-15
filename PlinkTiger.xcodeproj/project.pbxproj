@@ -9,26 +9,30 @@
 /* Begin PBXBuildFile section */
 		18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4011C2B7E4FDE00022B43 /* AppDelegate.swift */; };
 		18D4011F2B7E4FDE00022B43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4011E2B7E4FDE00022B43 /* SceneDelegate.swift */; };
-		18D401212B7E4FDE00022B43 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D401202B7E4FDE00022B43 /* ViewController.swift */; };
 		18D401262B7E4FE000022B43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18D401252B7E4FE000022B43 /* Assets.xcassets */; };
 		18D401292B7E4FE000022B43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D401272B7E4FE000022B43 /* LaunchScreen.storyboard */; };
 		18D401342B7E501B00022B43 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18D401322B7E501B00022B43 /* Lato-Black.ttf */; };
 		18D401352B7E501B00022B43 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18D401332B7E501B00022B43 /* Lato-Light.ttf */; };
 		18D401382B7E503900022B43 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18D401372B7E503900022B43 /* SnapKit */; };
 		18D4013A2B7E504E00022B43 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18D401392B7E504E00022B43 /* Montserrat-Black.ttf */; };
+		18D401412B7E529C00022B43 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D401402B7E529C00022B43 /* HomeView.swift */; };
+		18D401432B7E52A600022B43 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D401422B7E52A600022B43 /* HomeVC.swift */; };
+		18D401452B7E53B400022B43 /* Font + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D401442B7E53B400022B43 /* Font + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18D401192B7E4FDE00022B43 /* PlinkTiger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlinkTiger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D4011C2B7E4FDE00022B43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18D4011E2B7E4FDE00022B43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		18D401202B7E4FDE00022B43 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		18D401252B7E4FE000022B43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18D401282B7E4FE000022B43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18D4012A2B7E4FE000022B43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18D401322B7E501B00022B43 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
 		18D401332B7E501B00022B43 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		18D401392B7E504E00022B43 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		18D401402B7E529C00022B43 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		18D401422B7E52A600022B43 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		18D401442B7E53B400022B43 /* Font + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,12 +66,10 @@
 		18D4011B2B7E4FDE00022B43 /* PlinkTiger */ = {
 			isa = PBXGroup;
 			children = (
-				18D4011C2B7E4FDE00022B43 /* AppDelegate.swift */,
-				18D4011E2B7E4FDE00022B43 /* SceneDelegate.swift */,
-				18D401202B7E4FDE00022B43 /* ViewController.swift */,
-				18D401252B7E4FE000022B43 /* Assets.xcassets */,
+				18D4013B2B7E522700022B43 /* App */,
+				18D4013C2B7E528000022B43 /* Flow */,
+				18D401442B7E53B400022B43 /* Font + Extension.swift */,
 				18D401302B7E4FFA00022B43 /* Resourse */,
-				18D401272B7E4FE000022B43 /* LaunchScreen.storyboard */,
 				18D4012A2B7E4FE000022B43 /* Info.plist */,
 			);
 			path = PlinkTiger;
@@ -76,6 +78,7 @@
 		18D401302B7E4FFA00022B43 /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
+				18D401252B7E4FE000022B43 /* Assets.xcassets */,
 				18D401312B7E500300022B43 /* UiFont */,
 			);
 			path = Resourse;
@@ -89,6 +92,33 @@
 				18D401332B7E501B00022B43 /* Lato-Light.ttf */,
 			);
 			path = UiFont;
+			sourceTree = "<group>";
+		};
+		18D4013B2B7E522700022B43 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				18D401272B7E4FE000022B43 /* LaunchScreen.storyboard */,
+				18D4011E2B7E4FDE00022B43 /* SceneDelegate.swift */,
+				18D4011C2B7E4FDE00022B43 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		18D4013C2B7E528000022B43 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				18D4013D2B7E528A00022B43 /* Home */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		18D4013D2B7E528A00022B43 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				18D401422B7E52A600022B43 /* HomeVC.swift */,
+				18D401402B7E529C00022B43 /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,8 +200,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18D401212B7E4FDE00022B43 /* ViewController.swift in Sources */,
+				18D401432B7E52A600022B43 /* HomeVC.swift in Sources */,
 				18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */,
+				18D401412B7E529C00022B43 /* HomeView.swift in Sources */,
+				18D401452B7E53B400022B43 /* Font + Extension.swift in Sources */,
 				18D4011F2B7E4FDE00022B43 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
