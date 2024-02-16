@@ -21,18 +21,15 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tappedButtons()
+        tappedButtons()
     }
     
-//    private func tappedButtons() {
-//        contentView.profileButtons.addTarget(self, action: #selector(buttonTappedProfile), for: .touchUpInside)
+    private func tappedButtons() {
+        contentView.profileButtons.addTarget(self, action: #selector(buttonTappedProfile), for: .touchUpInside)
 //        contentView.playButtons.addTarget(self, action: #selector(buttonTappedPlay), for: .touchUpInside)
-//        contentView.playButtons.addTarget(self, action: #selector(buttonTappedPlayReleased), for: .touchDown)
 //        contentView.getBonusButtons.addTarget(self, action: #selector(buttonTappedGet), for: .touchUpInside)
-//        contentView.getBonusButtons.addTarget(self, action: #selector(buttonTappedGetReleased), for: .touchDown)
 //        contentView.leadButtons.addTarget(self, action: #selector(buttonTappedLead), for: .touchUpInside)
-//        contentView.leadButtons.addTarget(self, action: #selector(buttonTappedLeadReleased), for: .touchDown)
-//    }
+    }
 //    
 //    @objc func buttonTappedPlay() {
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -71,9 +68,9 @@ class HomeVC: UIViewController {
 //    }
 //
 //
-//    @objc func buttonTappedProfile() {
-//        let profileVC = ProfileVC()
-//        navigationController?.pushViewController(profileVC, animated: true)
-//    }
+    @objc func buttonTappedProfile() {
+        let profileVC = ProfileVC()
+        navigationController?.pushViewController(profileVC, animated: true)
+    }
 }
 
