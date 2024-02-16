@@ -23,6 +23,10 @@
 		18C6E33E2B7F56D00066BB89 /* BonusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E33D2B7F56D00066BB89 /* BonusView.swift */; };
 		18C6E3412B7F58140066BB89 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E3402B7F58140066BB89 /* Memory.swift */; };
 		18C6E3432B7F5AF60066BB89 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E3422B7F5AF60066BB89 /* Settings.swift */; };
+		18C6E3462B7F97900066BB89 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18C6E3452B7F97900066BB89 /* Lato-Regular.ttf */; };
+		18C6E3492B7F9DFB0066BB89 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E3482B7F9DFB0066BB89 /* CircleView.swift */; };
+		18C6E34B2B7F9E060066BB89 /* CongratilationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E34A2B7F9E060066BB89 /* CongratilationVC.swift */; };
+		18C6E34D2B7F9E0B0066BB89 /* CongratilationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E34C2B7F9E0B0066BB89 /* CongratilationView.swift */; };
 		18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4011C2B7E4FDE00022B43 /* AppDelegate.swift */; };
 		18D4011F2B7E4FDE00022B43 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4011E2B7E4FDE00022B43 /* SceneDelegate.swift */; };
 		18D401262B7E4FE000022B43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18D401252B7E4FE000022B43 /* Assets.xcassets */; };
@@ -55,6 +59,10 @@
 		18C6E33D2B7F56D00066BB89 /* BonusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusView.swift; sourceTree = "<group>"; };
 		18C6E3402B7F58140066BB89 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		18C6E3422B7F5AF60066BB89 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		18C6E3452B7F97900066BB89 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		18C6E3482B7F9DFB0066BB89 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		18C6E34A2B7F9E060066BB89 /* CongratilationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratilationVC.swift; sourceTree = "<group>"; };
+		18C6E34C2B7F9E0B0066BB89 /* CongratilationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratilationView.swift; sourceTree = "<group>"; };
 		18D401192B7E4FDE00022B43 /* PlinkTiger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlinkTiger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D4011C2B7E4FDE00022B43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18D4011E2B7E4FDE00022B43 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +104,8 @@
 			children = (
 				18C6E33B2B7F56CC0066BB89 /* BonusVC.swift */,
 				18C6E33D2B7F56D00066BB89 /* BonusView.swift */,
+				18C6E3482B7F9DFB0066BB89 /* CircleView.swift */,
+				18C6E3472B7F9DDD0066BB89 /* Congratilation */,
 			);
 			path = Bonus;
 			sourceTree = "<group>";
@@ -190,6 +200,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		18C6E3472B7F9DDD0066BB89 /* Congratilation */ = {
+			isa = PBXGroup;
+			children = (
+				18C6E34A2B7F9E060066BB89 /* CongratilationVC.swift */,
+				18C6E34C2B7F9E0B0066BB89 /* CongratilationView.swift */,
+			);
+			path = Congratilation;
+			sourceTree = "<group>";
+		};
 		18D401102B7E4FDE00022B43 = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +249,7 @@
 		18D401312B7E500300022B43 /* UiFont */ = {
 			isa = PBXGroup;
 			children = (
+				18C6E3452B7F97900066BB89 /* Lato-Regular.ttf */,
 				18D401482B7E6ABB00022B43 /* Lato-Medium.ttf */,
 				18D401462B7E6AAC00022B43 /* Lato-Bold.ttf */,
 				18D401392B7E504E00022B43 /* Montserrat-Black.ttf */,
@@ -338,6 +358,7 @@
 				18D401352B7E501B00022B43 /* Lato-Light.ttf in Resources */,
 				18D401472B7E6AAC00022B43 /* Lato-Bold.ttf in Resources */,
 				18D401342B7E501B00022B43 /* Lato-Black.ttf in Resources */,
+				18C6E3462B7F97900066BB89 /* Lato-Regular.ttf in Resources */,
 				18D401292B7E4FE000022B43 /* LaunchScreen.storyboard in Resources */,
 				18D401262B7E4FE000022B43 /* Assets.xcassets in Resources */,
 				18D401492B7E6ABB00022B43 /* Lato-Medium.ttf in Resources */,
@@ -356,8 +377,10 @@
 				18C6E33E2B7F56D00066BB89 /* BonusView.swift in Sources */,
 				18C6E32E2B7F56980066BB89 /* InfoView.swift in Sources */,
 				18C6E33C2B7F56CC0066BB89 /* BonusVC.swift in Sources */,
+				18C6E34D2B7F9E0B0066BB89 /* CongratilationView.swift in Sources */,
 				18C6E3262B7F56720066BB89 /* ProfileView.swift in Sources */,
 				18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */,
+				18C6E3492B7F9DFB0066BB89 /* CircleView.swift in Sources */,
 				18D401412B7E529C00022B43 /* HomeView.swift in Sources */,
 				18C6E3342B7F56AF0066BB89 /* BuyVC.swift in Sources */,
 				18C6E3412B7F58140066BB89 /* Memory.swift in Sources */,
@@ -368,6 +391,7 @@
 				18C6E3242B7F566D0066BB89 /* ProfileVC.swift in Sources */,
 				18C6E31C2B7F55E80066BB89 /* ChoseView.swift in Sources */,
 				18D401452B7E53B400022B43 /* Font + Extension.swift in Sources */,
+				18C6E34B2B7F9E060066BB89 /* CongratilationVC.swift in Sources */,
 				18C6E3382B7F56BF0066BB89 /* LeaderboardVC.swift in Sources */,
 				18C6E3302B7F56A00066BB89 /* SetupsVC.swift in Sources */,
 				18C6E3432B7F5AF60066BB89 /* Settings.swift in Sources */,

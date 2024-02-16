@@ -17,6 +17,7 @@ extension UIFont {
         case light = "-Light"
         case bold = "-Bold"
         case medium = "-Medium"
+        case regular = "-Regular"
     }
     
     static func customFont(

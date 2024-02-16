@@ -55,7 +55,7 @@ class InfoView: UIView {
         let label = UILabel()
                 label.text = "An exciting adventure in which players go on an exciting journey through the mysterious ancient world of Egypt.\nThe key mechanics of the game is to find matches between ancient inscriptions and modern artifacts. When players find matches, it opens up new avenues for exploration and allows them to get closer to solving puzzles.\nSecrets discovered by players may shed light on the mysteries of Ancient Egypt, such as secret rituals, lost civilizations, or even the location of ancient treasures."
         label.textColor = .white
-        label.font = .customFont(font: .montserrat, style: .medium, size: 12)
+        label.font = .customFont(font: .montserrat, style: .regular, size: 14)
         label.numberOfLines = 0
         return label
     }()

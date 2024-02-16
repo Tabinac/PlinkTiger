@@ -28,12 +28,12 @@ class Memory {
         }
     }
     
-    var scoreLife: Int {
+    var scoreMeat: Int {
         get {
-            return defaults.integer(forKey: "scoreLife", defaultValue: 2)
+            return defaults.integer(forKey: "scoreMeat", defaultValue: 2)
         }
         set {
-            defaults.set(newValue, forKey: "scoreLife")
+            defaults.set(newValue, forKey: "scoreMeat")
         }
     }
     

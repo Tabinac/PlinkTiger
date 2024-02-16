@@ -24,10 +24,9 @@ class ProfileVC: UIViewController {
     }
     
     private func tappedButtons() {
-        contentView.homeButtons.addTarget(self, action: #selector(goButtonTappedHome), for: .touchUpInside)
+        contentView.backBtn.addTarget(self, action: #selector(goButtonTappedHome), for: .touchUpInside)
         contentView.chosePhotoBtn.addTarget(self, action: #selector(goTakePhoto), for: .touchUpInside)
         contentView.infoButtons.addTarget(self, action: #selector(goButtonTappedInfo), for: .touchUpInside)
-        contentView.setupButtons.addTarget(self, action: #selector(goButtonTappedSetup), for: .touchUpInside)
     }
     
     @objc func goButtonTappedHome() {
@@ -39,11 +38,6 @@ class ProfileVC: UIViewController {
         navigationController?.pushViewController(infoVC, animated: true)
     }
     
-    @objc func goButtonTappedSetup() {
-//        let setupVC = SetupVC()
-//        navigationController?.pushViewController(setupVC, animated: true)
-    }
-
     @objc func goTakePhoto() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let alert = UIAlertController(title: "Pick Photo", message: nil, preferredStyle: .actionSheet)

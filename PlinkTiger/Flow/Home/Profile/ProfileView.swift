@@ -13,21 +13,15 @@ class ProfileView: UIView,UITextFieldDelegate {
         return imageView
     }()
     
-    private(set) lazy var homeButtons: UIButton = {
+    private(set) lazy var backBtn: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(.btnHome, for: .normal)
+        button.setBackgroundImage(.btnBack, for: .normal)
         return button
     }()
     
     private(set) lazy var infoButtons: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(.btnInfo, for: .normal)
-        return button
-    }()
-
-    private(set) lazy var setupButtons: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(.btnSetups, for: .normal)
         return button
     }()
 
@@ -70,7 +64,7 @@ class ProfileView: UIView,UITextFieldDelegate {
     }
     
     private func setupUI() {
-        [bgImage,homeButtons,infoButtons,setupButtons,chosePhotoBtn,profileTextField ] .forEach(addSubview(_:))
+        [bgImage,backBtn,infoButtons,chosePhotoBtn,profileTextField ] .forEach(addSubview(_:))
     }
     
     private func setUpConstraints(){
@@ -79,26 +73,20 @@ class ProfileView: UIView,UITextFieldDelegate {
             make.edges.equalToSuperview()
         }
         
-        homeButtons.snp.makeConstraints { make in
+        backBtn.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(34)
             make.left.equalToSuperview().offset(24)
             make.size.equalTo(48)
         }
         
-        setupButtons.snp.makeConstraints { make in
+        infoButtons.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(34)
             make.right.equalToSuperview().offset(-24)
             make.size.equalTo(48)
         }
-        
-        infoButtons.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(34)
-            make.right.equalTo(setupButtons.snp.left).offset(-16)
-            make.size.equalTo(48)
-        }
-        
+                
         chosePhotoBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(homeButtons.snp.bottom).offset(40)
+            make.top.equalTo(backBtn.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
             make.size.equalTo(160)
         }
