@@ -34,7 +34,7 @@ class CongratilationView: UIView {
     private(set) lazy var scoreMeatLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = .customFont(font: .montserrat, style: .black, size: 60)
+        label.font = .customFont(font: .montserrat, style: .black, size: 48)
         label.textColor = .white
         label.numberOfLines = 0
         return label

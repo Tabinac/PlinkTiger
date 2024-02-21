@@ -23,17 +23,14 @@ class ChoseVC: UIViewController {
     
     private func tappedButtons() {
         contentView.backBtn.addTarget(self, action: #selector(buttonTappedBack), for: .touchUpInside)
-//        contentView.playButtons.addTarget(self, action: #selector(buttonTappedPlay), for: .touchUpInside)
+        contentView.classicBtn.addTarget(self, action: #selector(buttonTappedPlay), for: .touchUpInside)
 //        contentView.getBonusButtons.addTarget(self, action: #selector(buttonTappedGet), for: .touchUpInside)
     }
-//
-//    @objc func buttonTappedPlay() {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            self.contentView.playButtons.layer.borderColor = UIColor.customOrange.cgColor
-//           }
-//        let playVC = PlayVC()
-//        navigationController?.pushViewController(playVC, animated: true)
-//    }
+
+    @objc func buttonTappedPlay() {
+        let classicVC = ClassicVC()
+        navigationController?.pushViewController(classicVC, animated: true)
+    }
 //
 //    @objc func buttonTappedPlayReleased() {
 //        contentView.playButtons.layer.borderColor = UIColor.white.cgColor

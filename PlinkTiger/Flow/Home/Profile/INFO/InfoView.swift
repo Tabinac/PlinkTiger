@@ -24,13 +24,9 @@ class InfoView: UIView {
     private(set) lazy var imageConteinerView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
-        view.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.65).cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = .init(width: 0, height: 8)
-        view.layer.shadowRadius = 14
-        view.layer.borderWidth = 2
         view.layer.borderColor = UIColor.customBrown.cgColor
         view.layer.cornerRadius = 8
+        view.clipsToBounds = true
         return view
     }()
     
@@ -53,9 +49,9 @@ class InfoView: UIView {
 
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-                label.text = "An exciting adventure in which players go on an exciting journey through the mysterious ancient world of Egypt.\nThe key mechanics of the game is to find matches between ancient inscriptions and modern artifacts. When players find matches, it opens up new avenues for exploration and allows them to get closer to solving puzzles.\nSecrets discovered by players may shed light on the mysteries of Ancient Egypt, such as secret rituals, lost civilizations, or even the location of ancient treasures."
+                label.text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
         label.textColor = .white
-        label.font = .customFont(font: .montserrat, style: .regular, size: 14)
+        label.font = .customFont(font: .lato, style: .regular, size: 14)
         label.numberOfLines = 0
         return label
     }()

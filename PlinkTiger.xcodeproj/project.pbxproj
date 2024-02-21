@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		188755512B8630450005CC30 /* ClassicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755502B8630450005CC30 /* ClassicVC.swift */; };
+		188755572B8630CF0005CC30 /* ClassicScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755562B8630CF0005CC30 /* ClassicScene.swift */; };
+		1887555A2B863C020005CC30 /* CusomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755592B863C020005CC30 /* CusomButton.swift */; };
+		1887555C2B8643BC0005CC30 /* CustomSKSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1887555B2B8643BC0005CC30 /* CustomSKSpriteNode.swift */; };
+		1887555E2B8644B30005CC30 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1887555D2B8644B30005CC30 /* Double+Extensions.swift */; };
 		18C6E31A2B7F55E30066BB89 /* ChoseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E3192B7F55E30066BB89 /* ChoseVC.swift */; };
 		18C6E31C2B7F55E80066BB89 /* ChoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E31B2B7F55E80066BB89 /* ChoseView.swift */; };
 		18C6E3242B7F566D0066BB89 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C6E3232B7F566D0066BB89 /* ProfileVC.swift */; };
@@ -43,6 +48,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		188755502B8630450005CC30 /* ClassicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicVC.swift; sourceTree = "<group>"; };
+		188755562B8630CF0005CC30 /* ClassicScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicScene.swift; sourceTree = "<group>"; };
+		188755592B863C020005CC30 /* CusomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusomButton.swift; sourceTree = "<group>"; };
+		1887555B2B8643BC0005CC30 /* CustomSKSpriteNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSKSpriteNode.swift; sourceTree = "<group>"; };
+		1887555D2B8644B30005CC30 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		18C6E3192B7F55E30066BB89 /* ChoseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoseVC.swift; sourceTree = "<group>"; };
 		18C6E31B2B7F55E80066BB89 /* ChoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoseView.swift; sourceTree = "<group>"; };
 		18C6E3232B7F566D0066BB89 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -91,6 +101,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		188755582B863BE40005CC30 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				188755592B863C020005CC30 /* CusomButton.swift */,
+				1887555B2B8643BC0005CC30 /* CustomSKSpriteNode.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		18C6E3142B7F55880066BB89 /* Play */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +150,7 @@
 		18C6E3182B7F55D00066BB89 /* Chose */ = {
 			isa = PBXGroup;
 			children = (
+				188755582B863BE40005CC30 /* Buttons */,
 				18C6E3192B7F55E30066BB89 /* ChoseVC.swift */,
 				18C6E31B2B7F55E80066BB89 /* ChoseView.swift */,
 				18C6E31F2B7F56090066BB89 /* Classic */,
@@ -157,6 +177,8 @@
 		18C6E31F2B7F56090066BB89 /* Classic */ = {
 			isa = PBXGroup;
 			children = (
+				188755502B8630450005CC30 /* ClassicVC.swift */,
+				188755562B8630CF0005CC30 /* ClassicScene.swift */,
 			);
 			name = Classic;
 			sourceTree = "<group>";
@@ -196,6 +218,7 @@
 				18D401442B7E53B400022B43 /* Font + Extension.swift */,
 				18C6E3402B7F58140066BB89 /* Memory.swift */,
 				18C6E3422B7F5AF60066BB89 /* Settings.swift */,
+				1887555D2B8644B30005CC30 /* Double+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -380,6 +403,7 @@
 				18C6E34D2B7F9E0B0066BB89 /* CongratilationView.swift in Sources */,
 				18C6E3262B7F56720066BB89 /* ProfileView.swift in Sources */,
 				18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */,
+				1887555E2B8644B30005CC30 /* Double+Extensions.swift in Sources */,
 				18C6E3492B7F9DFB0066BB89 /* CircleView.swift in Sources */,
 				18D401412B7E529C00022B43 /* HomeView.swift in Sources */,
 				18C6E3342B7F56AF0066BB89 /* BuyVC.swift in Sources */,
@@ -390,12 +414,16 @@
 				18C6E31A2B7F55E30066BB89 /* ChoseVC.swift in Sources */,
 				18C6E3242B7F566D0066BB89 /* ProfileVC.swift in Sources */,
 				18C6E31C2B7F55E80066BB89 /* ChoseView.swift in Sources */,
+				188755572B8630CF0005CC30 /* ClassicScene.swift in Sources */,
 				18D401452B7E53B400022B43 /* Font + Extension.swift in Sources */,
 				18C6E34B2B7F9E060066BB89 /* CongratilationVC.swift in Sources */,
 				18C6E3382B7F56BF0066BB89 /* LeaderboardVC.swift in Sources */,
+				188755512B8630450005CC30 /* ClassicVC.swift in Sources */,
 				18C6E3302B7F56A00066BB89 /* SetupsVC.swift in Sources */,
 				18C6E3432B7F5AF60066BB89 /* Settings.swift in Sources */,
 				18C6E3362B7F56B40066BB89 /* BuyView.swift in Sources */,
+				1887555C2B8643BC0005CC30 /* CustomSKSpriteNode.swift in Sources */,
+				1887555A2B863C020005CC30 /* CusomButton.swift in Sources */,
 				18D4011F2B7E4FDE00022B43 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

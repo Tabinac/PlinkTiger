@@ -30,7 +30,7 @@ class CongratilationVC: UIViewController {
     }
     
     private func configureLabel() {
-        contentView.scoreMeatLabel.text = "+\(total)\n MEAT"
+        contentView.scoreMeatLabel.text = "+\(total)\nM e a t"
     }
 
     @objc func closeView() {

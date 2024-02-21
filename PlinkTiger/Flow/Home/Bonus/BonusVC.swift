@@ -28,7 +28,7 @@ class BonusVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        goDailyScreen()
+        goDailyScreen()
     }
     
     private func tappedButtons() {

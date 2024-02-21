@@ -22,6 +22,45 @@ class HomeView: UIView {
         return imageView
     }()
  
+    private(set) lazy var meatConteiner: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 25
+        view.layer.borderColor = UIColor.customBrown.cgColor
+        view.layer.borderWidth = 2
+        return view
+    }()
+    
+    private lazy var meatImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .meatImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
+    private(set) lazy var scoreMeat: UILabel = {
+        let label = UILabel()
+        label.text = "\(Memory.shared.scoreMeat)"
+        label.font = .customFont(font: .lato, style: .bold, size: 18)
+        label.textColor = .white
+        return label
+    }()
+    
+    private(set) lazy var scoreContainer: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 25
+        view.layer.borderColor = UIColor.customBrown.cgColor
+        view.layer.borderWidth = 2
+        return view
+    }()
+    
+    private(set) lazy var scoreCoints: UILabel = {
+        let label = UILabel()
+        label.text = "\(Memory.shared.scoreCoints)"
+        label.font = .customFont(font: .lato, style: .bold, size: 18)
+        label.textColor = .white
+        return label
+    }()
+
 
     private(set) lazy var playButtons: UIButton = {
         let button = UIButton()
@@ -120,7 +159,11 @@ class HomeView: UIView {
     }
     
     private func setupUI() {
-        [backImage,profileButtons,tigerImg,playButtons,getBonusButtons,leadButtons,buyButtons] .forEach(addSubview(_:))
+        [backImage,meatConteiner,scoreContainer,profileButtons,tigerImg,playButtons,getBonusButtons,leadButtons,buyButtons] .forEach(addSubview(_:))
+        meatConteiner.addSubview(meatImg)
+        meatConteiner.addSubview(scoreMeat)
+        scoreContainer.addSubview(scoreCoints)
+
     }
     
     private func setUpConstraints(){
@@ -129,9 +172,38 @@ class HomeView: UIView {
             make.edges.equalToSuperview()
         }
         
+        meatConteiner.snp.makeConstraints { (make) in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
+            make.left.equalToSuperview().offset(28)
+            make.height.equalTo(48)
+            make.width.equalTo(88)
+        }
+        
+        meatImg.snp.makeConstraints { (make) in
+            make.centerY.equalTo(meatConteiner)
+            make.left.equalToSuperview().offset(16)
+            make.size.equalTo(24)
+        }
+        
+        scoreMeat.snp.makeConstraints { (make) in
+            make.centerY.equalTo(meatConteiner)
+            make.right.equalToSuperview().offset(-16)
+        }
+    
+        scoreContainer.snp.makeConstraints { (make) in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(48)
+            make.width.equalTo(88)
+        }
+
+        scoreCoints.snp.makeConstraints { (make) in
+            make.center.equalTo(scoreContainer)
+        }
+
         profileButtons.snp.makeConstraints { (make) in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
-            make.right.equalToSuperview().offset(-24)
+            make.right.equalToSuperview().offset(-28)
             make.size.equalTo(48)
         }
         
