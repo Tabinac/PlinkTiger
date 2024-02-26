@@ -60,6 +60,7 @@ class ClassicScene: SKScene {
     private var ball = SKSpriteNode()
     private var dropButton = CustomSKButton(texture: SKTexture(imageNamed: "throwSKBtn"))
     private var balanceLabel = SKLabelNode()
+    private var meatLifeLabel = SKLabelNode()
     private var segmentArray = [SKShapeNode]()
     private var secondSegmentArray = [SKShapeNode]()
     
@@ -142,13 +143,12 @@ class ClassicScene: SKScene {
         print("\(size.width)")
         createPlinkoBoard()
         createPegsLeft()
-//        createPegsRight()
-//        setupBackground()
-//        setupNavigation()
-//        setupLeftBar()
+        createPegsRight()
+        setupBackground()
+        setupNavigation()
         setupBottomBar()
 //        setupGameScene()
-//        configureGame()
+        configureGame()
 //        addObserver()
     }
     
@@ -194,24 +194,16 @@ class ClassicScene: SKScene {
         homeButton.action = { self.homeButtonAction() }
         addChild(homeButton)
         
-        let settingsButton = CustomSKButton(texture: SKTexture(imageNamed: "btn_settings"))
-        settingsButton.size = .init(width: 30.autoSize, height: 30.autoSize)
-        settingsButton.anchorPoint = .init(x: 0, y: 0)
-        settingsButton.position = CGPoint(x: size.width / 2 + 296 .autoSize, y: size.height / 2 + 140.autoSize)
-        settingsButton.zPosition = 10
-        settingsButton.action = { self.settingsButtonAction() }
-        addChild(settingsButton)
-        
-        let balancBgNode = SKSpriteNode(imageNamed: "score_bg")
-        balancBgNode.anchorPoint = .init(x: 0, y: 0)
-        balancBgNode.size = .init(width: 86.autoSize, height: 32.autoSize)
-        balancBgNode.position = CGPoint(x: size.width / 2 + 200, y: size.height / 2 + 145.autoSize)
+        let balancBgNode = SKSpriteNode(imageNamed: "scoreImg")
+        balancBgNode.anchorPoint = CGPoint(x: 0.0, y: 1.0)
+        balancBgNode.size = CGSize(width: 88.autoSize, height: 48.autoSize)
+        balancBgNode.position = CGPoint(x: 40, y: size.height - 60)
         balancBgNode.zPosition = 10
         addChild(balancBgNode)
         
         balanceLabel = SKLabelNode(text: "\(Memory.shared.scoreCoints)")
-        balanceLabel.fontName = "JosefinSans-Bold"
-        balanceLabel.fontSize = 24.autoSize
+        balanceLabel.fontName = "Lato-Bold"
+        balanceLabel.fontSize = 18.autoSize
         balanceLabel.horizontalAlignmentMode = .center
         balanceLabel.lineBreakMode = .byWordWrapping
         balanceLabel.preferredMaxLayoutWidth = 65
@@ -220,49 +212,39 @@ class ClassicScene: SKScene {
             let scale = 65 / balanceLabel.frame.width
             balanceLabel.setScale(scale)
         }
-        balanceLabel.position = CGPoint(x: size.width / 2 + 243.autoSize, y: size.height / 2 + 146.autoSize)
+        balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
         balanceLabel.zPosition = balancBgNode.zPosition + 1
         addChild(balanceLabel)
         
+        let meatBgNode = SKSpriteNode(imageNamed: "scoreImg")
+        meatBgNode.anchorPoint = CGPoint(x: 1.0, y: 1.0)
+        meatBgNode.size = CGSize(width: 88.autoSize, height: 48.autoSize)
+        meatBgNode.position = CGPoint(x: size.width - 40, y: size.height - 60)
+        meatBgNode.zPosition = 10
+        addChild(meatBgNode)
+
+        meatLifeLabel = SKLabelNode(text: "\(Memory.shared.scoreMeat)")
+        meatLifeLabel.fontName = "Lato-Medium"
+        meatLifeLabel.fontSize = 18.autoSize
+        meatLifeLabel.horizontalAlignmentMode = .center
+        meatLifeLabel.lineBreakMode = .byWordWrapping
+        meatLifeLabel.preferredMaxLayoutWidth = 65
+        meatLifeLabel.lineBreakMode = .byWordWrapping
+        if meatLifeLabel.frame.width > 65 {
+            let scale = 65 / meatLifeLabel.frame.width
+            meatLifeLabel.setScale(scale)
+        }
+        meatLifeLabel.position = CGPoint(x: meatBgNode.position.x - meatBgNode.size.width / 2 + 15, y: meatBgNode.position.y - meatBgNode.size.height / 2 - 6)
+        meatLifeLabel.zPosition = meatBgNode.zPosition + 1
+        addChild(meatLifeLabel)
+        let meatImageNode = SKSpriteNode(imageNamed: "meatImg")
+        meatImageNode.size = CGSize(width: 24, height: 24)
+        meatImageNode.position = CGPoint(x: -meatBgNode.size.width / 2 - 15, y: meatBgNode.size.height / 2 - 50)
+        meatImageNode.zPosition = meatBgNode.zPosition + 1
+        meatBgNode.addChild(meatImageNode)
+
     }
-    
-    private func setupLeftBar() {
-        let titleLabel = SKLabelNode(text: "Risk:")
-        titleLabel.fontName = "JosefinSans-Bold"
-        titleLabel.fontSize = 24.autoSize
-        titleLabel.horizontalAlignmentMode = .left
-        titleLabel.position = CGPoint(x: size.width / 2 - 304 .autoSize, y: size.height / 2 + 70.autoSize)
-        titleLabel.zPosition = 10
-        addChild(titleLabel)
-        
-        let lowButton = CustomSKButton(texture: SKTexture(imageNamed: "btn_low_active"))
-        lowButton.size = .init(width: 85.autoSize, height: 24.autoSize)
-        lowButton.anchorPoint = .init(x: 0, y: 0)
-        lowButton.position = CGPoint(x: size.width / 2 - 304 .autoSize, y: size.height / 2 + 20.autoSize)
-        lowButton.zPosition = 10
-        lowButton.action = { self.lowButtonAction() }
-        lowButton.name = "lowButton"
-        addChild(lowButton)
-        
-        let mediumButton = CustomSKButton(texture: SKTexture(imageNamed: "btn_medium"))
-        mediumButton.size = .init(width: 85.autoSize, height: 24.autoSize)
-        mediumButton.anchorPoint = .init(x: 0, y: 0)
-        mediumButton.position = CGPoint(x: size.width / 2 - 304 .autoSize, y: size.height / 2 - 25.autoSize)
-        mediumButton.zPosition = 10
-        mediumButton.action = { self.mediumButtonAction() }
-        mediumButton.name = "mediumButton"
-        addChild(mediumButton)
-        
-        let highButton = CustomSKButton(texture: SKTexture(imageNamed: "btn_high"))
-        highButton.size = .init(width: 85.autoSize, height: 24.autoSize)
-        highButton.anchorPoint = .init(x: 0, y: 0)
-        highButton.position = CGPoint(x: size.width / 2 - 304 .autoSize, y: size.height / 2 - 70.autoSize)
-        highButton.zPosition = 10
-        highButton.action = { self.highButtonAction() }
-        highButton.name = "highButton"
-        addChild(highButton)
-    }
-    
+
     private func setupBottomBar() {
         dropButton.size = .init(width: 340.autoSize, height: 48.autoSize)
         dropButton.anchorPoint = .init(x: 0.5, y: 0.5)
@@ -345,7 +327,7 @@ class ClassicScene: SKScene {
         //            let ballName = UserModel.shared.selectedBall
         ball = SKSpriteNode(imageNamed: "balImg")
         ball.anchorPoint = .init(x: 0.5, y: 0.5)
-        ball.size = .init(width: 18.autoSize, height: 18.autoSize)
+        ball.size = .init(width: 15.autoSize, height: 15.autoSize)
         ball.position = positionBall
         ball.physicsBody = .init(circleOfRadius: 4.autoSize)
         ball.physicsBody?.isDynamic = true
@@ -353,7 +335,7 @@ class ClassicScene: SKScene {
         ball.physicsBody?.categoryBitMask = PhysicsCategory.ball
         ball.physicsBody?.collisionBitMask = PhysicsCategory.block | PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.contactTestBitMask = PhysicsCategory.winPanel | PhysicsCategory.field
-        ball.physicsBody?.mass = 2.7
+        ball.physicsBody?.mass = 1.4
         ball.physicsBody?.restitution = 0.2
         ball.zPosition = 11
         ball.name = "ball"
@@ -369,11 +351,11 @@ class ClassicScene: SKScene {
         let spacingX: CGFloat
         let spacingY: CGFloat
             numberOfRows = 8
-            pinSize = 18
+            pinSize = 12
             startX = size.width / 2
             startY = size.height - 120
-            spacingX = 46
-            spacingY = 46
+            spacingX = 40
+            spacingY = 40
         
         for row in 0..<numberOfRows {
             let numberOfColumns = 1 + row
@@ -399,51 +381,6 @@ class ClassicScene: SKScene {
         }
     }
     
-//    func createPegsLeft() {
-//        
-//        let numberOfRows: Int
-//        let pegsSize: CGSize
-//        let fontSize: CGFloat
-//        let startX: CGFloat
-//        let startY: CGFloat
-//        let spacing: CGFloat
-//            numberOfRows = 4
-//            pegsSize = CGSize(width: 15, height: 3)
-//            startX = size.width / 2 - 160
-//            startY = size.height / 2 - 80
-//            spacing = 23
-//            fontSize = 12
-// 
-//        
-//        for col in 0..<numberOfRows {
-//            let startPegX = startX + CGFloat(numberOfRows - 1) * spacing
-//            let x = startPegX - CGFloat(col) * spacing
-//            let y = startY
-//            
-//            let colorPeg = UIColor.red
-//            let peg = RoundedCornerSpriteNode(color: colorPeg, size: pegsSize, cornerRadius: 10)
-//            peg.position = CGPoint(x: x, y: y)
-//            peg.physicsBody = SKPhysicsBody(rectangleOf: peg.size)
-//            peg.physicsBody?.isDynamic = false
-//            peg.physicsBody?.categoryBitMask = PhysicsCategory.winPanel
-//            peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
-//            peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
-//            peg.name = "peg_\(col)"
-//            print("\(peg.name)")
-//            peg.zPosition = 11
-//            pegArray.append(peg)
-//            addChild(peg)
-//            
-//            let orderLabel = SKLabelNode(text: "x\(col)")
-//            orderLabel.fontName = "Lato-Medium"
-//            orderLabel.fontSize = fontSize
-//            orderLabel.position = CGPoint(x: peg.position.x, y: peg.position.y - 15)
-//            orderLabel.zPosition = 12
-//            pegLabelArray.append(orderLabel)
-//            addChild(orderLabel)
-//        }
-//    }
-    
     func createPegsLeft() {
         
         let numberOfRows: Int
@@ -451,22 +388,22 @@ class ClassicScene: SKScene {
         let fontSize: CGFloat
         let startX: CGFloat
         let startY: CGFloat
-        var spacing: CGFloat // Изменено на var, чтобы можно было присвоить значение позже
+        let spacing: CGFloat
+            numberOfRows = 4
+            pegsSize = CGSize(width: 40, height: 25)
+            startX = size.width / 2 - 114
+            startY = size.height / 2 - 25
+            spacing = 46
+            fontSize = 12
+ 
         
-        numberOfRows = 4
-        pegsSize = CGSize(width: 36, height: 25)
-        startY = size.height / 2 - 80
-        spacing = 45 // Теперь инициализируем переменную здесь
-        fontSize = 12
-
-        startX = size.width / 2 - CGFloat(numberOfRows - 1) * spacing / 2 // Центрируем начало ряда относительно центра экрана
-
-        for col in 0..<numberOfRows {
-            let x = startX + CGFloat(col) * spacing // Используем startX для вычисления X-координаты
+        for col in 1...numberOfRows {
+            let startPegX = startX + CGFloat(numberOfRows - 1) * spacing
+            let x = startPegX - CGFloat(col) * spacing
             let y = startY
             
             let colorPeg = UIColor.red
-            let peg = RoundedCornerSpriteNode(color: colorPeg, size: pegsSize, cornerRadius: 8,borderWidth: 2,borderColor: .customBrown)
+            let peg = RoundedCornerSpriteNode(color: colorPeg, size: pegsSize, cornerRadius: 10,borderWidth: 2,borderColor: .customBrown)
             peg.position = CGPoint(x: x, y: y)
             peg.physicsBody = SKPhysicsBody(rectangleOf: peg.size)
             peg.physicsBody?.isDynamic = false
@@ -482,7 +419,7 @@ class ClassicScene: SKScene {
             let orderLabel = SKLabelNode(text: "x\(col)")
             orderLabel.fontName = "Lato-Medium"
             orderLabel.fontSize = fontSize
-            orderLabel.position = CGPoint(x: peg.position.x, y: peg.position.y)
+            orderLabel.position = CGPoint(x: peg.position.x, y: peg.position.y - 4)
             orderLabel.zPosition = 12
             pegLabelArray.append(orderLabel)
             addChild(orderLabel)
@@ -498,13 +435,13 @@ class ClassicScene: SKScene {
         let startY: CGFloat
         let spacing: CGFloat
             numberOfRows = 4
-            pegsSize = CGSize(width: 15, height: 3)
-            startX = size.width / 2 - 160
-            startY = size.height / 2 - 80
-            spacing = 23
+            pegsSize = CGSize(width: 40, height: 25)
+            startX = size.width / 2 - 158
+            startY = size.height / 2 - 25
+            spacing = 46
             fontSize = 12
         
-        for col in 1..<numberOfRows {
+        for col in 1...numberOfRows {
             let startPegX = startX + CGFloat(numberOfRows - 1) * spacing
             let x = startPegX + CGFloat(col) * spacing
             let y = startY
@@ -526,7 +463,7 @@ class ClassicScene: SKScene {
             let orderLabel = SKLabelNode(text: "x\(col)")
             orderLabel.fontName = "Lato-Medium"
             orderLabel.fontSize = fontSize
-            orderLabel.position = CGPoint(x: peg.position.x, y: peg.position.y - 15)
+            orderLabel.position = CGPoint(x: peg.position.x, y: peg.position.y - 4)
             orderLabel.zPosition = 12
             pegLabelArray.append(orderLabel)
             addChild(orderLabel)
@@ -863,13 +800,13 @@ extension ClassicScene {
     
     private func contactBallAndBlock(blockNode: SKNode?) {
         guard let blockNode = blockNode as? SKSpriteNode else { return }
-        
-        if !pegAnimationState[blockNode, default: false] {
-            let pinHit = setupPinHitAnimation(position: blockNode.position)
-            let sequence = animationSector(sectorAnimation: pinHit, kay: "img_ball_hit", blockNode: blockNode, timePerFrame: 0.15)
-            pinHit.run(sequence, withKey: "img_ball_hit")
-            pegAnimationState[blockNode] = true
-        }
+//        
+//        if !pegAnimationState[blockNode, default: false] {
+//            let pinHit = setupPinHitAnimation(position: blockNode.position)
+//            let sequence = animationSector(sectorAnimation: pinHit, kay: "img_ball_hit", blockNode: blockNode, timePerFrame: 0.15)
+//            pinHit.run(sequence, withKey: "img_ball_hit")
+//            pegAnimationState[blockNode] = true
+//        }
     }
     
     func countingWinnings(winPanelBody: SKNode) -> Int {
