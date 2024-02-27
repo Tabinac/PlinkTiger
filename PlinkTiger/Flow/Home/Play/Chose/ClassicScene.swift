@@ -22,11 +22,11 @@ enum Methods {
     case betPlusMinus
 }
 
-enum RiskStatus {
-    case low
-    case medium
-    case high
-}
+//enum RiskStatus {
+//    case low
+//    case medium
+//    case high
+//}
 
 enum PanelName: String {
     case peg0 = "peg_0"
@@ -54,7 +54,6 @@ struct PhysicsCategory {
 }
 
 class ClassicScene: SKScene {
-//    var userModel: UserModel = .shared
     var memory: Memory = .shared
     
     private var ball = SKSpriteNode()
@@ -89,7 +88,8 @@ class ClassicScene: SKScene {
         }
     }
     
-    private var bet: Int = 0 {
+    private var bet: Int = 0 
+    {
         didSet {
             let betLabel = findLabelNode(labelName: LabelName.titleBetLabel.rawValue)
             betLabel?.text = String("\(bet)")
@@ -116,11 +116,11 @@ class ClassicScene: SKScene {
     
     var balance: Int {
         get {
-            return memory.scoreCoints
+            return memory.scoreMeat
         }
         set {
-            memory.scoreCoints = newValue
-            balanceLabel.text = String(balance)
+            memory.scoreMeat = newValue
+            meatLifeLabel.text = String(balance)
         }
     }
     
@@ -147,20 +147,12 @@ class ClassicScene: SKScene {
         setupBackground()
         setupNavigation()
         setupBottomBar()
-//        setupGameScene()
         configureGame()
-//        addObserver()
     }
-    
-//    private func addObserver() {
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(updateCoinsBalance),
-//                                               name: ConstantsApp.dBalanceChangedNotification,
-//                                               object: nil)
-//    }
-    
-    @objc func updateCoinsBalance() {
-        balanceLabel.text = String(balance)
+        
+     func updateCoinsBalance() {
+        meatLifeLabel.text = String(balance)
+        balanceLabel.text = String(memory.scoreCoints)
     }
     
     private func configureGame() {
@@ -201,7 +193,7 @@ class ClassicScene: SKScene {
         balancBgNode.zPosition = 10
         addChild(balancBgNode)
         
-        balanceLabel = SKLabelNode(text: "\(Memory.shared.scoreCoints)")
+        balanceLabel = SKLabelNode(text: "\(memory.scoreCoints)")
         balanceLabel.fontName = "Lato-Bold"
         balanceLabel.fontSize = 18.autoSize
         balanceLabel.horizontalAlignmentMode = .center
@@ -244,48 +236,18 @@ class ClassicScene: SKScene {
         meatBgNode.addChild(meatImageNode)
 
     }
-
+    
     private func setupBottomBar() {
         dropButton.size = .init(width: 340.autoSize, height: 48.autoSize)
         dropButton.anchorPoint = .init(x: 0.5, y: 0.5)
-        dropButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 240)
+        
+        let bottomMargin: CGFloat = 60
+        let verticalPosition = bottomMargin + dropButton.size.height / 2
+        
+        dropButton.position = CGPoint(x: size.width / 2, y: verticalPosition)
         dropButton.action = { self.dropButtonButtonAction() }
+        
         addChild(dropButton)
-    }
-    
-    //GameScene
-    
-    func setupGameScene() {
-        let gameFieldNode = SKSpriteNode(imageNamed: "img_field_border_1")
-        gameFieldNode.size = .init(width: 315.autoSize, height: 240.autoSize)
-        gameFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2 + 5.autoSize)
-        gameFieldNode.physicsBody = .init(texture: gameFieldNode.texture!, size: gameFieldNode.size)
-        gameFieldNode.physicsBody?.categoryBitMask = PhysicsCategory.field
-        gameFieldNode.physicsBody?.contactTestBitMask = PhysicsCategory.ball
-        gameFieldNode.physicsBody?.collisionBitMask = PhysicsCategory.ball
-        gameFieldNode.physicsBody?.isDynamic = false
-        gameFieldNode.zPosition = 10
-        addChild(gameFieldNode)
-        
-        let gameFieldbg = SKSpriteNode(imageNamed: "img_field")
-        gameFieldbg.size = .init(width: 315.autoSize, height: 240.autoSize)
-        gameFieldbg.position = CGPoint(x: size.width / 2, y: size.height / 2 + 5.autoSize)
-        gameFieldbg.zPosition = 9
-        addChild(gameFieldbg)
-        
-        let stub = SKSpriteNode()
-        stub.color = .white
-        stub.size = .init(width: 5.autoSize, height: 4.autoSize)
-        stub.position = CGPoint(x: size.width / 2, y: size.height / 2 + 123.autoSize)
-        stub.zPosition = 11
-        addChild(stub)
-        
-        let gameContainerdNode = SKSpriteNode(imageNamed: "img_container")
-        gameContainerdNode.size = .init(width: 79.autoSize, height: 63.autoSize)
-        gameContainerdNode.position = CGPoint(x: size.width / 2, y: size.height / 2 + 140.autoSize)
-        gameContainerdNode.zPosition = 5
-        addChild(gameContainerdNode)
-        
     }
     
     func setupWinPanelAnimation(position: CGPoint) -> SKSpriteNode {
@@ -302,29 +264,28 @@ class ClassicScene: SKScene {
     
     func setupWinLabelAnimation(text: String) -> SKLabelNode {
         let winLabe = SKLabelNode(text: "\(text)")
-        winLabe.fontName = "JosefinSans-Bold"
-        winLabe.fontSize = 20
-        winLabe.position = CGPoint(x: size.width / 2 + 190, y: size.height / 2 - 90)
+        winLabe.fontName = "Lato-Bold"
+        winLabe.fontSize = 48
+        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 180)
         winLabe.zPosition = 12
         winLabeAnimationArray.append(winLabe)
         addChild(winLabe)
         return winLabe
     }
-    
-    func setupPinHitAnimation(position: CGPoint) -> SKSpriteNode {
-        let position = CGPoint(x: position.x, y: position.y)
-        let pinHit = SKSpriteNode(imageNamed: "img_ball_hit")
-        pinHit.size = .init(width: 14.autoSize, height: 14.autoSize)
-        pinHit.position = position
-        pinHit.zPosition = 15
-        pinHit.name = "pinHit"
-        pinHitAnimationArray.append(pinHit)
-        addChild(pinHit)
-        return pinHit
-    }
+   //MARK: - animate ball hit
+//    func setupPinHitAnimation(position: CGPoint) -> SKSpriteNode {
+//        let position = CGPoint(x: position.x, y: position.y)
+//        let pinHit = SKSpriteNode(imageNamed: "img_ball_hit")
+//        pinHit.size = .init(width: 14.autoSize, height: 14.autoSize)
+//        pinHit.position = position
+//        pinHit.zPosition = 15
+//        pinHit.name = "pinHit"
+//        pinHitAnimationArray.append(pinHit)
+//        addChild(pinHit)
+//        return pinHit
+//    }
     
     func setupBall(positionBall: CGPoint) {
-        //            let ballName = UserModel.shared.selectedBall
         ball = SKSpriteNode(imageNamed: "balImg")
         ball.anchorPoint = .init(x: 0.5, y: 0.5)
         ball.size = .init(width: 15.autoSize, height: 15.autoSize)
@@ -353,12 +314,14 @@ class ClassicScene: SKScene {
             numberOfRows = 8
             pinSize = 12
             startX = size.width / 2
-            startY = size.height - 120
-            spacingX = 40
-            spacingY = 40
+            startY = size.height - 150
+            spacingX = 35
+            spacingY = 35
+        
+        //MARK: - Create plinko board row
         
         for row in 0..<numberOfRows {
-            let numberOfColumns = 1 + row
+            let numberOfColumns = 3 + row
             let startColumnX = startX + CGFloat(numberOfColumns - 1) * spacingX / 2
             for col in 0..<numberOfColumns {
                 let x = startColumnX - CGFloat(col) * spacingX
@@ -396,7 +359,6 @@ class ClassicScene: SKScene {
             spacing = 46
             fontSize = 12
  
-        
         for col in 1...numberOfRows {
             let startPegX = startX + CGFloat(numberOfRows - 1) * spacing
             let x = startPegX - CGFloat(col) * spacing
@@ -483,62 +445,7 @@ extension ClassicScene {
         guard popupActive == false else { return }
         resultTransfer?(.home)
     }
-    
-    @objc private func lowButtonAction() {
-//        guard popupActive == false else { return }
-//        checkRisk(riskStatus: .low)
-//        cheakStatusRisk()
-    }
-    
-    @objc private func mediumButtonAction() {
-//        guard popupActive == false else { return }
-//        checkRisk(riskStatus: .medium)
-//        cheakStatusRisk()
-    }
-    
-    @objc private func highButtonAction() {
-//        guard popupActive == false else { return }
-//        checkRisk(riskStatus: .high)
-//        cheakStatusRisk()
-    }
-    
-    @objc private func minBetButtonAction() {
-        guard popupActive == false else { return }
-        minBet()
-    }
-    
-    @objc private func maxBetButtonAction() {
-        guard popupActive == false else { return }
-        maxBet()
-    }
-    
-    @objc private func minusBetButtonAction() {
-        guard popupActive == false else { return }
-        changeValue(plus: false, set: betSet, index: betIndex, methods: .betPlusMinus)
-    }
-    
-    @objc private func plusBetButtonAction() {
-        guard popupActive == false else { return }
-        changeValue(plus: true, set: betSet, index: betIndex, methods: .betPlusMinus)
-    }
-    
-    @objc private func minusRowsButtonAction() {
-        guard popupActive == false else { return }
-//        if userModel.numberRows == RowsCount.nineRows.rawValue {
-//            updateRows(rows: .eightRows)
-//        } else if userModel.numberRows == RowsCount.tenRows.rawValue {
-//            updateRows(rows: .nineRows)
-//        }
-    }
-    
-    @objc private func plusRowsButtonAction() {
-        guard popupActive == false else { return }
-//        if userModel.numberRows == RowsCount.eightRows.rawValue {
-//            updateRows(rows: .nineRows)
-//        } else if userModel.numberRows == RowsCount.nineRows.rawValue {
-//            updateRows(rows: .tenRows)
-//        }
-    }
+
     
     @objc private func minusBallsNumberButtonAction() {
         guard popupActive == false else { return }
@@ -643,10 +550,10 @@ extension ClassicScene {
         removeAllPins()
         removeAllPeg()
         removeAllPegLabel()
-//        createPlinkoBoard(countRows: rows)
+        createPlinkoBoard()
         createPegsLeft()
         createPegsRight()
-        updateTitleRows()
+//        updateTitleRows()
     }
     
     func updateTitleRows() {
@@ -680,50 +587,6 @@ extension ClassicScene {
             numbersBallIndex += increment
         }
     }
-    
-//    func checkRisk(riskStatus: RiskStatus) {
-//        var spriteButtonActive = SKSpriteNode()
-//        var spriteButtonNotActive_1 = SKSpriteNode()
-//        var spriteButtonNotActive_2 = SKSpriteNode()
-//        var nameImageStringActive = ""
-//        var nameImageStringNotActive_1 = ""
-//        var nameImageStringNotActive_2 = ""
-//        switch riskStatus {
-//        case .low:
-//            riskCoeff = 1
-//            spriteButtonActive = findSprite(spriteName: "lowButton")!
-//            spriteButtonNotActive_1 = findSprite(spriteName: "mediumButton")!
-//            spriteButtonNotActive_2 = findSprite(spriteName: "highButton")!
-//            nameImageStringActive = "btn_low_active"
-//            nameImageStringNotActive_1 = "btn_medium"
-//            nameImageStringNotActive_2 = "btn_high"
-//        case .medium:
-//            riskCoeff = 2
-//            spriteButtonActive = findSprite(spriteName: "mediumButton")!
-//            spriteButtonNotActive_1 = findSprite(spriteName: "lowButton")!
-//            spriteButtonNotActive_2 = findSprite(spriteName: "highButton")!
-//            nameImageStringActive = "btn_medium_active"
-//            nameImageStringNotActive_1 = "btn_low"
-//            nameImageStringNotActive_2 = "btn_high"
-//        case .high:
-//            riskCoeff = 3
-//            spriteButtonActive = findSprite(spriteName: "highButton")!
-//            spriteButtonNotActive_1 = findSprite(spriteName: "lowButton")!
-//            spriteButtonNotActive_2 = findSprite(spriteName: "mediumButton")!
-//            nameImageStringActive = "btn_high_active"
-//            nameImageStringNotActive_1 = "btn_low"
-//            nameImageStringNotActive_2 = "btn_medium"
-//        }
-//        spriteButtonActive.texture = SKTexture(imageNamed: "\(nameImageStringActive)")
-//        spriteButtonNotActive_1.texture = SKTexture(imageNamed: "\(nameImageStringNotActive_1)")
-//        spriteButtonNotActive_2.texture = SKTexture(imageNamed: "\(nameImageStringNotActive_2)")
-//    }
-//    
-//    func cheakStatusRisk() {
-//        if let rowsCount = RowsCount(rawValue: userModel.numberRows) {
-//            updateRows(rows: rowsCount)
-//        }
-//    }
 }
 
 // MARK: - Physics Contact Delegate
@@ -759,8 +622,8 @@ extension ClassicScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-            //            print(" ball.position.y  - \(ball.position.y)")
-            if ball.position.y < 85 {
+                        print(" ball.position.y  - \(ball.position.y)")
+            if ball.position.y < 400 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
                 DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) {
                     ball.removeFromParent()
@@ -809,6 +672,7 @@ extension ClassicScene {
 //        }
     }
     
+    
     func countingWinnings(winPanelBody: SKNode) -> Int {
         var panelСoefficient = 0
         switch winPanelBody.name {
@@ -832,9 +696,11 @@ extension ClassicScene {
             break
         }
         animateCoins()
-        balance += bet * panelСoefficient
-        var winCount = bet * panelСoefficient
+        memory.scoreCoints += 50 * panelСoefficient
+        var winCount = 50 * panelСoefficient
         print("winCount --- \(winCount)")
+        updateCoinsBalance()
+        resultTransfer?(.settings)
         return winCount
     }
 }
@@ -972,7 +838,3 @@ extension ClassicScene {
         return foundLabelNode
     }
 }
-
-
-
-

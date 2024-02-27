@@ -74,8 +74,7 @@ extension ClassicVC {
             }
             
             if result == .settings {
-//                self.router?.push(scene: .settingsScene, animated: true)
-                self.receivingResultComplition()
+            print("UPDATEBACK")
             }
         }
     }
