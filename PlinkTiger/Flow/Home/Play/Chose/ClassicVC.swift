@@ -16,9 +16,6 @@ typealias ResultingAction = ((GameAction) -> Void)
 
 final class ClassicVC: UIViewController {
     private let gameSceneView = SKView()
-    
-//    private let model = UserModel.shared
-    
     public var gameScene: ClassicScene!
     
     override func viewDidLoad() {
@@ -31,10 +28,6 @@ final class ClassicVC: UIViewController {
         super.viewWillAppear(animated)
         setConstraints()
     }
-    
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
 }
 
 // MARK: - Setup Subviews
@@ -65,41 +58,17 @@ extension ClassicVC {
     private func receivingResultComplition() {
         gameScene.resultTransfer = { [weak self] result in
             guard let self else { return }
-            if result == .home {
-//                self.router?.popRootView(animated: true)
+            if result == .back {
+                navigationController?.popViewController(animated: true)
             }
-            if result == .pause {
-//                self.pauseToggle()
-                self.setupPopupWindow(type: result)
-            }
-            
-            if result == .settings {
+            if result == .updateScoreBackEnd {
             print("UPDATEBACK")
+            }
+            if result == .nolifes {
+                let alert = UIAlertController(title: "Sorry", message: "You don't have enough meat", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
             }
         }
     }
-}
-
-// MARK: - Calculation and Other Methods
-
-extension ClassicVC {
-    private func setupPopupWindow(type: GameState) {
-//        let popupsView = PopupsView(frame: view.frame, popupType: type)
-//        view.addSubview(popupsView)
-//
-//        popupsView.pauseActionTransfer = { [weak self] action in
-//            switch action {
-//            case .home:
-//                self?.router?.popRootView(animated: true)
-//                
-//            case .back:
-//                NotificationCenter.default.post(name: ConstantsApp.pauseDisabledNotificationName, object: nil)
-//                UserModel.shared.firstPlay ? UserModel.shared.firstPlay = false : ()
-//            }
-//        }
-    }
-    
-//    private func pauseToggle() {
-//        gameScene.isPaused.toggle()
-//    }
 }

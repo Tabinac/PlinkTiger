@@ -6,9 +6,9 @@ import SpriteKit
 import GameplayKit
 
 enum GameState {
-    case home
-    case pause
-    case settings
+    case back
+    case updateScoreBackEnd
+    case nolifes
 }
 
 enum RowsCount: Int {
@@ -16,17 +16,6 @@ enum RowsCount: Int {
     case nineRows = 9
     case tenRows = 10
 }
-
-enum Methods {
-    case numberBallPlusMinus
-    case betPlusMinus
-}
-
-//enum RiskStatus {
-//    case low
-//    case medium
-//    case high
-//}
 
 enum PanelName: String {
     case peg0 = "peg_0"
@@ -179,17 +168,17 @@ class ClassicScene: SKScene {
     
     private func setupNavigation() {
         let homeButton = CustomSKButton(texture: SKTexture(imageNamed: "btnBack"))
-        homeButton.size = .init(width: 30.autoSize, height: 30.autoSize)
-        homeButton.anchorPoint = .init(x: 0, y: 0)
-        homeButton.position = CGPoint(x: size.width / 2 - 319 .autoSize, y: size.height / 2 + 140.autoSize)
+        homeButton.size = .init(width: 48.autoSize, height: 48.autoSize)
+        homeButton.anchorPoint = .init(x: 0, y: 1.0)
+        homeButton.position = CGPoint(x: 28, y: size.height - 60)
         homeButton.zPosition = 10
-        homeButton.action = { self.homeButtonAction() }
+        homeButton.action = { self.backButtonAction() }
         addChild(homeButton)
         
         let balancBgNode = SKSpriteNode(imageNamed: "scoreImg")
         balancBgNode.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         balancBgNode.size = CGSize(width: 88.autoSize, height: 48.autoSize)
-        balancBgNode.position = CGPoint(x: 40, y: size.height - 60)
+        balancBgNode.position = CGPoint(x: size.width / 2 - 60, y: size.height - 60)
         balancBgNode.zPosition = 10
         addChild(balancBgNode)
         
@@ -215,7 +204,7 @@ class ClassicScene: SKScene {
         meatBgNode.zPosition = 10
         addChild(meatBgNode)
 
-        meatLifeLabel = SKLabelNode(text: "\(Memory.shared.scoreMeat)")
+        meatLifeLabel = SKLabelNode(text: "\(memory.scoreMeat)")
         meatLifeLabel.fontName = "Lato-Medium"
         meatLifeLabel.fontSize = 18.autoSize
         meatLifeLabel.horizontalAlignmentMode = .center
@@ -252,7 +241,7 @@ class ClassicScene: SKScene {
     
     func setupWinPanelAnimation(position: CGPoint) -> SKSpriteNode {
         let position = CGPoint(x: position.x, y: position.y + 9)
-        let winPanel = SKSpriteNode(imageNamed: "img_ball_win")
+        let winPanel = SKSpriteNode(imageNamed: "balImg")
         winPanel.size = .init(width: 20.autoSize, height: 20.autoSize)
         winPanel.position = position
         winPanel.zPosition = 12
@@ -438,33 +427,32 @@ class ClassicScene: SKScene {
 extension ClassicScene {
     @objc private func settingsButtonAction() {
         guard popupActive == false else { return }
-        resultTransfer?(.settings)
+        resultTransfer?(.updateScoreBackEnd)
     }
     
-    @objc private func homeButtonAction() {
+    @objc private func backButtonAction() {
         guard popupActive == false else { return }
-        resultTransfer?(.home)
+        resultTransfer?(.back)
+    }
+    
+     private func checkLifes() {
+        guard popupActive == false else { return }
+        resultTransfer?(.nolifes)
     }
 
-    
-    @objc private func minusBallsNumberButtonAction() {
-        guard popupActive == false else { return }
-        changeValue(plus: false, set: numbersBallSet, index: numbersBallIndex, methods: .numberBallPlusMinus)
-    }
-    
-    @objc private func plusBallsNumberButtonAction() {
-        guard popupActive == false else { return }
-        changeValue(plus: true, set: numbersBallSet, index: numbersBallIndex, methods: .numberBallPlusMinus)
-    }
-    
     @objc private func dropButtonButtonAction() {
         guard popupActive == false else { return }
-        popupActive = true     // - сдесь блокируем нажатия когда идет падение мячика
-
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
-            guard let self else { return }
+        if memory.scoreMeat > 0 {
+            popupActive = true     // - сдесь блокируем нажатия когда идет падение мячика
             
-            self.createBall(countBall: 1)
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
+                guard let self else { return }
+                
+                self.createBall(countBall: 1)
+            }
+        } else {
+            checkLifes()
+            print("No lifes")
         }
     }
     
@@ -472,7 +460,6 @@ extension ClassicScene {
         var maxCount = 0
         maxCount = 1
         if balance == 0 {
-            //            setActiveAllButtons(active: false)
             dropButton.setActive(active: false)
             return
         }
@@ -494,7 +481,6 @@ extension ClassicScene {
         minCount = 1
         
         if balance == 0 {
-            //            setActiveAllButtons(active: false)
             dropButton.setActive(active: false)
             return
         }
@@ -553,38 +539,13 @@ extension ClassicScene {
         createPlinkoBoard()
         createPegsLeft()
         createPegsRight()
-//        updateTitleRows()
-    }
-    
-    func updateTitleRows() {
-//        if let foundSprite = findLabelNode(labelName: LabelName.titleRowsLabel.rawValue) {
-//            foundSprite.text = "\(UserModel.shared.numberRows)"
-//        }
     }
     
     func createBall(countBall: Int) {
         balance -= bet * countBall
-        for i in 1...countBall {
-            var random = Double.random(in: -20...20)
-            setupBall(positionBall: CGPoint(x: size.width / 2 + random, y: size.height - 90))
-        }
-    }
-    
-    func changeValue(plus: Bool, set: [Int], index: Int, methods: Methods ) {
-        let increment = plus ? 1 : -1
-        let newValue = index + increment
-        if newValue < 0 {
-            return
-        }
-        
-        if newValue >= set.count {
-            return
-        }
-        switch methods {
-        case .betPlusMinus:
-            betIndex += increment
-        case .numberBallPlusMinus:
-            numbersBallIndex += increment
+        for _ in 1...countBall {
+            let random = Double.random(in: -20...20)
+            setupBall(positionBall: CGPoint(x: size.width / 2 + random, y: size.height - 120))
         }
     }
 }
@@ -623,11 +584,9 @@ extension ClassicScene: SKPhysicsContactDelegate {
         
         func checkPositionBall(ball: SKNode) {
                         print(" ball.position.y  - \(ball.position.y)")
-            if ball.position.y < 400 {
+            if ball.position.y < 300 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
-                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) {
                     ball.removeFromParent()
-                }
                 let isBall = self.checkSprite(spriteName: "ball")
                 if !isBall {
                     self.popupActive = false
@@ -646,9 +605,9 @@ extension ClassicScene {
             removeAllwinLabelAnimation()
             let winCount = countingWinnings(winPanelBody: winPanel)
             let winPanel = setupWinPanelAnimation(position: winPanel.position)
-            let winLabel = setupWinLabelAnimation(text: "+\(winCount)")
-            let sequence = animationSector(sectorAnimation: winPanel, kay: "img_ball_win", timePerFrame: 0.7)
-            winPanel.run(sequence, withKey: "img_ball_win")
+            let winLabel = setupWinLabelAnimation(text: "+\(winCount) POINTS")
+            let sequence = animationSector(sectorAnimation: winPanel, kay: "balImg", timePerFrame: 0.7)
+            winPanel.run(sequence, withKey: "balImg")
             
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) { [weak self] in
                 guard let self else { return }
@@ -695,12 +654,11 @@ extension ClassicScene {
         case .some(_):
             break
         }
-        animateCoins()
         memory.scoreCoints += 50 * panelСoefficient
         var winCount = 50 * panelСoefficient
         print("winCount --- \(winCount)")
         updateCoinsBalance()
-        resultTransfer?(.settings)
+        resultTransfer?(.updateScoreBackEnd)
         return winCount
     }
 }
@@ -791,11 +749,6 @@ extension ClassicScene {
         let sequence = SKAction.sequence(actions)
         return SKAction.repeatForever(sequence)
     }
-    
-    @objc func animateCoins() {
-//        configureCoinsAnimation(from: CGPoint(x: size.width / 2 + 190, y: size.height / 2 + 60),
-//                                to: CGPoint(x: size.width / 2 + 230, y: size.height / 2 - 150))
-    }
 }
 
 extension ClassicScene {
@@ -803,7 +756,7 @@ extension ClassicScene {
     private func checkSprite(spriteName: String) -> Bool {
         var bool: Bool = false
         enumerateChildNodes(withName: "//*") { [weak self] node, _ in
-            guard let self else { return }
+            guard self != nil else { return }
             if let sprite = node as? SKSpriteNode, sprite.name == "\(spriteName)" {
                 bool = true
             }
@@ -815,7 +768,7 @@ extension ClassicScene {
         var foundSprite: SKSpriteNode?
         
         enumerateChildNodes(withName: "//*") { [weak self] node, _ in
-            guard let self = self else { return }
+            guard self != nil else { return }
             
             if let sprite = node as? SKSpriteNode, sprite.name == spriteName {
                 foundSprite = sprite
@@ -828,7 +781,7 @@ extension ClassicScene {
         var foundLabelNode: SKLabelNode?
         
         enumerateChildNodes(withName: "//*") { [weak self] node, _ in
-            guard let self = self else { return }
+            guard self != nil else { return }
             
             if let labelNode = node as? SKLabelNode, labelNode.name == labelName {
                 foundLabelNode = labelNode
