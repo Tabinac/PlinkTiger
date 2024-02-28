@@ -1,17 +1,17 @@
 //
-//  ClassicScene.swift
-//  PlinkTiger
+//  PlaceBallScene.swift
+
 
 import SpriteKit
 import GameplayKit
 
-enum GameState {
+enum placeState {
     case back
     case updateScoreBackEnd
     case nolifes
 }
 
-enum PanelName: String {
+enum PanelNamePlace: String {
     case peg0 = "peg_0"
     case peg1 = "peg_1"
     case peg2 = "peg_2"
@@ -21,13 +21,13 @@ enum PanelName: String {
     case peg6 = "peg_6"
 }
 
-enum LabelName: String {
+enum LabelNamePlace: String {
     case titleBetLabel = "titleBetLabel"
     case titleRowsLabel = "titleRowsLabel"
     case titleBallsNumberLabel = "titleBallsNumberLabel"
 }
 
-struct PhysicsCategory {
+struct PhysicsCategoryPlace {
     static let ball: UInt32 = 0x1 << 0
     static let block: UInt32 = 0x1 << 1
     static let winPanel: UInt32 = 0x1 << 2
@@ -36,10 +36,11 @@ struct PhysicsCategory {
     static let empty: UInt32 = 0x1 << 10
 }
 
-class ClassicScene: SKScene {
+class PlaceBallScene: SKScene {
     var memory: Memory = .shared
     
     private var ball = SKSpriteNode()
+    private var greenSprite = SKSpriteNode()
     private var dropButton = CustomSKButton(texture: SKTexture(imageNamed: "throwSKBtn"))
     private var balanceLabel = SKLabelNode()
     private var meatLifeLabel = SKLabelNode()
@@ -50,7 +51,7 @@ class ClassicScene: SKScene {
     
     
     private var popupActive: Bool = false
-    public var resultTransfer: ((GameState) -> Void)?
+    public var resultPlace: ((placeState) -> Void)?
         
     var pinsArray: [SKSpriteNode] = []
     var pegArray: [SKSpriteNode] = []
@@ -71,10 +72,10 @@ class ClassicScene: SKScene {
         }
     }
     
-    private var bet: Int = 0 
+    private var bet: Int = 0
     {
         didSet {
-            let betLabel = findLabelNode(labelName: LabelName.titleBetLabel.rawValue)
+            let betLabel = findLabelNode(labelName: LabelNamePlace.titleBetLabel.rawValue)
             betLabel?.text = String("\(bet)")
         }
     }
@@ -92,7 +93,7 @@ class ClassicScene: SKScene {
     
     private var numbersBall: Int = 0 {
         didSet {
-            let numberBallLabel = findLabelNode(labelName: LabelName.titleBallsNumberLabel.rawValue)
+            let numberBallLabel = findLabelNode(labelName: LabelNamePlace.titleBallsNumberLabel.rawValue)
             numberBallLabel?.text = String("\(numbersBall)")
         }
     }
@@ -121,9 +122,11 @@ class ClassicScene: SKScene {
         setupGameSubviews()
     }
     
+    
     private func setupGameSubviews() {
         print("\(size.width)")
         createPlinkoBoard()
+        addSideWalls()
         createPegsLeft()
         createPegsRight()
         setupBackground()
@@ -168,6 +171,13 @@ class ClassicScene: SKScene {
         homeButton.action = { self.backButtonAction() }
         addChild(homeButton)
         
+        greenSprite = SKSpriteNode(color: .customDarkGreen, size: CGSize(width: size.width, height: 60.autoSize))
+        greenSprite.position = CGPoint(x: size.width / 2, y: size.height - 150)
+        greenSprite.zPosition = 10 // Чтобы спрайт был ниже пинов
+        addChild(greenSprite)
+        greenSprite.isUserInteractionEnabled = true
+
+
         let balancBgNode = SKSpriteNode(imageNamed: "scoreImg")
         balancBgNode.anchorPoint = CGPoint(x: 0.0, y: 1.0)
         balancBgNode.size = CGSize(width: 88.autoSize, height: 48.autoSize)
@@ -243,12 +253,13 @@ class ClassicScene: SKScene {
         addChild(winPanel)
         return winPanel
     }
+    //MARK: -  Create WinLabel
     
     func setupWinLabelAnimation(text: String) -> SKLabelNode {
         let winLabe = SKLabelNode(text: "\(text)")
         winLabe.fontName = "Lato-Bold"
-        winLabe.fontSize = 48
-        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 180)
+        winLabe.fontSize = 20
+        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 300)
         winLabe.zPosition = 12
         winLabeAnimationArray.append(winLabe)
         addChild(winLabe)
@@ -272,35 +283,54 @@ class ClassicScene: SKScene {
         ball.name = "ball"
         addChild(ball)
     }
-    
+    //MARK: create Walls
+    func addSideWalls() {
+        let leftWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
+        leftWall.position = CGPoint(x: 0, y: size.height / 2)
+        leftWall.physicsBody = SKPhysicsBody(rectangleOf: leftWall.size)
+        leftWall.physicsBody?.isDynamic = false
+        leftWall.physicsBody?.categoryBitMask = PhysicsCategory.block
+        leftWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
+        leftWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        addChild(leftWall)
+        
+        let rightWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
+        rightWall.position = CGPoint(x: size.width, y: size.height / 2)
+        rightWall.physicsBody = SKPhysicsBody(rectangleOf: rightWall.size)
+        rightWall.physicsBody?.isDynamic = false
+        rightWall.physicsBody?.categoryBitMask = PhysicsCategory.block
+        rightWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
+        rightWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        addChild(rightWall)
+    }
+
+//MARK: create Board
     func createPlinkoBoard() {
-        let numberOfRows: Int
-        let pinSize: CGFloat
-        
-        let startX: CGFloat
-        let startY: CGFloat
-        let spacingX: CGFloat
-        let spacingY: CGFloat
-            numberOfRows = 8
-            pinSize = 12
-            startX = size.width / 2
-            startY = size.height - 150
-            spacingX = 35
-            spacingY = 35
-        
-        //MARK: - Create plinko board row
+        let numberOfRows = 16
+        let numberOfPinsPerRow = 11
+        let pinSize: CGFloat = 12
+        let spacingX: CGFloat = 30
+        let spacingY: CGFloat = 30
+        let startX = size.width / 2
+        let startY = size.height - 200
         
         for row in 0..<numberOfRows {
-            let numberOfColumns = 3 + row
-            let startColumnX = startX + CGFloat(numberOfColumns - 1) * spacingX / 2
-            for col in 0..<numberOfColumns {
-                let x = startColumnX - CGFloat(col) * spacingX
+            for col in 0..<numberOfPinsPerRow {
+                var x: CGFloat
+                if row % 2 == 0 {
+                    // Для четных строк добавляем смещение на половину ширины пина
+                    x = startX - CGFloat(numberOfPinsPerRow - 1) * spacingX / 2 + CGFloat(col) * spacingX
+                } else {
+                    // Для нечетных строк располагаем пины без смещения
+                    x = startX - CGFloat(numberOfPinsPerRow - 1) * spacingX / 2 + CGFloat(col) * spacingX + spacingX / 2
+
+                }
                 let y = startY - CGFloat(row) * spacingY
                 
                 let pin = SKSpriteNode(imageNamed: "pegImg")
                 pin.position = CGPoint(x: x, y: y)
-                pin.size = .init(width: pinSize, height: pinSize)
-                pin.physicsBody = .init(circleOfRadius: pinSize / 2)
+                pin.size = CGSize(width: pinSize, height: pinSize)
+                pin.physicsBody = SKPhysicsBody(circleOfRadius: pinSize / 2)
                 pin.physicsBody?.isDynamic = false
                 
                 pin.physicsBody?.categoryBitMask = PhysicsCategory.block
@@ -309,11 +339,12 @@ class ClassicScene: SKScene {
                 
                 pin.zPosition = 11
                 addChild(pin)
-                pinsArray.append(pin)
             }
         }
     }
-    
+
+    //MARK: create Bonus
+
     func createPegsLeft() {
         
         let numberOfRows: Int
@@ -325,7 +356,7 @@ class ClassicScene: SKScene {
             numberOfRows = 4
             pegsSize = CGSize(width: 40, height: 25)
             startX = size.width / 2 - 114
-            startY = size.height / 2 - 25
+            startY = size.height / 2 - 260
             spacing = 46
             fontSize = 12
  
@@ -369,7 +400,7 @@ class ClassicScene: SKScene {
             numberOfRows = 4
             pegsSize = CGSize(width: 40, height: 25)
             startX = size.width / 2 - 158
-            startY = size.height / 2 - 25
+            startY = size.height / 2 - 260
             spacing = 46
             fontSize = 12
         
@@ -405,20 +436,20 @@ class ClassicScene: SKScene {
 
 // MARK: - Actions
 
-extension ClassicScene {
+extension PlaceBallScene {
     @objc private func settingsButtonAction() {
         guard popupActive == false else { return }
-        resultTransfer?(.updateScoreBackEnd)
+        resultPlace?(.updateScoreBackEnd)
     }
     
     @objc private func backButtonAction() {
         guard popupActive == false else { return }
-        resultTransfer?(.back)
+        resultPlace?(.back)
     }
     
      private func checkLifes() {
         guard popupActive == false else { return }
-        resultTransfer?(.nolifes)
+         resultPlace?(.nolifes)
     }
 
     @objc private func dropButtonButtonAction() {
@@ -436,47 +467,7 @@ extension ClassicScene {
             print("No lifes")
         }
     }
-    
-    @objc func maxBet() {
-        var maxCount = 0
-        maxCount = 1
-        if balance == 0 {
-            dropButton.setActive(active: false)
-            return
-        }
-        
-        if balance <= maxCount {
-            betIndex = 0
-        } else {
-            let canBet = balance
-            let subBet = betSet.filter({ (bet) -> Bool in
-                return bet <= canBet
-            })
-            guard let max = subBet.max() else { return }
-            betIndex = betSet.firstIndex(of: max)!
-        }
-    }
-    
-    @objc func minBet() {
-        var minCount = 0
-        minCount = 1
-        
-        if balance == 0 {
-            dropButton.setActive(active: false)
-            return
-        }
-        
-        if balance <= minCount {
-            betIndex = 0
-        } else {
-            let canBet = balance
-            let subBet = betSet.filter({ (bet) -> Bool in
-                return bet <= canBet
-            })
-            guard let min = subBet.min() else { return }
-            betIndex = betSet.firstIndex(of: min)!
-        }
-    }
+
     
     func removeAllPins() {
         for pin in pinsArray {
@@ -533,7 +524,7 @@ extension ClassicScene {
 
 // MARK: - Physics Contact Delegate
 
-extension ClassicScene: SKPhysicsContactDelegate {
+extension PlaceBallScene: SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         let otherBody = contact.bodyA.node
@@ -565,7 +556,7 @@ extension ClassicScene: SKPhysicsContactDelegate {
         
         func checkPositionBall(ball: SKNode) {
                         print(" ball.position.y  - \(ball.position.y)")
-            if ball.position.y < 300 {
+            if ball.position.y < 120 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
                     ball.removeFromParent()
                 let isBall = self.checkSprite(spriteName: "ball")
@@ -579,7 +570,7 @@ extension ClassicScene: SKPhysicsContactDelegate {
 
 // MARK: - Contact loggic
 
-extension ClassicScene {
+extension PlaceBallScene {
     private func contactBallAndwinPanel(winPanelBody: SKNode?, ballBody: SKNode?) {
         if let winPanel = winPanelBody as? SKSpriteNode, let ballBody = ballBody as? SKSpriteNode {
             ballBody.removeFromParent()
@@ -631,13 +622,13 @@ extension ClassicScene {
         var winCount = 50 * panelСoefficient
         print("winCount --- \(winCount)")
         updateCoinsBalance()
-        resultTransfer?(.updateScoreBackEnd)
+        resultPlace?(.updateScoreBackEnd)
         return winCount
     }
 }
 
 // MARK: - Animation
-extension ClassicScene {
+extension PlaceBallScene {
     func animationSector(sectorAnimation: SKSpriteNode, kay: String, blockNode: SKSpriteNode? = nil, timePerFrame: Double) -> SKAction {
         var scoreAnimationTextures: [SKTexture] = []
         
@@ -664,7 +655,28 @@ extension ClassicScene {
         let sequence = SKAction.sequence([isHiddenAnimation, repeatAnimation, removeAnimation, removeSprite])
         return sequence
     }
-
+    
+    func animationBall() {
+        
+        let numBalls = 1
+        let radius: CGFloat = 10
+        
+        for i in 0..<numBalls {
+            let angle = CGFloat(i) * (2 * CGFloat.pi) / CGFloat(numBalls)
+            let xOffset = radius * cos(angle)
+            let yOffset = radius * sin(angle)
+            
+            let ball = SKSpriteNode(imageNamed: "img_game_ball")
+            ball.size = CGSize(width: 8, height: 8)
+            ball.position = CGPoint(x: size.width / 2 + xOffset , y: size.height / 2 + yOffset + 150)
+            ball.zPosition = 20
+            addChild(ball)
+            
+            let moveAction = createSmoothMovementAction(for: ball, radius: radius)
+            ball.run(moveAction)
+        }
+    }
+    
     func createRandomMovementAction(for ball: SKSpriteNode, radius: CGFloat) -> SKAction {
         let moveDuration = TimeInterval.random(in: 0.2...0.4)
         let randomAngle = CGFloat.random(in: CGFloat.pi...CGFloat.pi * 4)
@@ -703,7 +715,7 @@ extension ClassicScene {
     }
 }
 
-extension ClassicScene {
+extension PlaceBallScene {
     
     private func checkSprite(spriteName: String) -> Bool {
         var bool: Bool = false

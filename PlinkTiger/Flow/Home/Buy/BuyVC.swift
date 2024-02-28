@@ -34,10 +34,6 @@ class BuyVC: UIViewController {
                Memory.shared.scoreMeat += 1
                contentView.scoreCoints.text = "\(Memory.shared.scoreCoints)"
                contentView.scoreMeat.text = "\(Memory.shared.scoreMeat)"
-            let congraAlert = UIAlertController(title: "Congratilations", message: "You have added one meat", preferredStyle: .alert)
-            congraAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            present(congraAlert, animated: true, completion: nil)
-
            } else {
                let alert = UIAlertController(title: "Sorry", message: "You don't have enough points", preferredStyle: .alert)
                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))

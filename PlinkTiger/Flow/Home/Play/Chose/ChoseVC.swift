@@ -24,43 +24,25 @@ class ChoseVC: UIViewController {
     private func tappedButtons() {
         contentView.backBtn.addTarget(self, action: #selector(buttonTappedBack), for: .touchUpInside)
         contentView.classicBtn.addTarget(self, action: #selector(buttonTappedPlay), for: .touchUpInside)
-//        contentView.getBonusButtons.addTarget(self, action: #selector(buttonTappedGet), for: .touchUpInside)
+        contentView.catchBtn.addTarget(self, action: #selector(buttonTappedCatch), for: .touchUpInside)
+        contentView.placeBtn.addTarget(self, action: #selector(buttonTappedPlace), for: .touchUpInside)
     }
 
     @objc func buttonTappedPlay() {
         let classicVC = ClassicVC()
         navigationController?.pushViewController(classicVC, animated: true)
     }
-//
-//    @objc func buttonTappedPlayReleased() {
-//        contentView.playButtons.layer.borderColor = UIColor.white.cgColor
-//    }
-//
-//    @objc func buttonTappedGet() {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            self.contentView.getBonusButtons.layer.borderColor = UIColor.customOrange.cgColor
-//           }
-//        let bonusVC = GetBonusVC()
-//        navigationController?.pushViewController(bonusVC, animated: true)
-//    }
-//
-//    @objc func buttonTappedGetReleased() {
-//        contentView.getBonusButtons.layer.borderColor = UIColor.white.cgColor
-//    }
-//
-//    @objc func buttonTappedLead() {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            self.contentView.leadButtons.layer.borderColor = UIColor.customOrange.cgColor
-//           }
-//        let leaderboardVC = LeaderboardVC()
-//        navigationController?.pushViewController(leaderboardVC, animated: true)
-//    }
-//
-//    @objc func buttonTappedLeadReleased() {
-//        contentView.leadButtons.layer.borderColor = UIColor.white.cgColor
-//    }
-//
-//
+
+    @objc func buttonTappedCatch() {
+        let catchVC = CatchBallVC()
+        navigationController?.pushViewController(catchVC, animated: true)
+    }
+    
+    @objc func buttonTappedPlace() {
+        
+        let placeVC = PlaceBallVC()
+        navigationController?.pushViewController(placeVC, animated: true)
+    }
     @objc func buttonTappedBack() {
         navigationController?.popViewController(animated: true)
     }

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		182A12F82B8F355800535F19 /* LoadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A12F72B8F355800535F19 /* LoadVC.swift */; };
+		182A12FA2B8F355E00535F19 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A12F92B8F355E00535F19 /* LoadView.swift */; };
+		182A12FD2B8F428400535F19 /* CatchBallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A12FC2B8F428400535F19 /* CatchBallVC.swift */; };
+		182A12FF2B8F428C00535F19 /* CatchBallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A12FE2B8F428C00535F19 /* CatchBallScene.swift */; };
+		182A13012B8F429900535F19 /* PlaceBallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A13002B8F429900535F19 /* PlaceBallVC.swift */; };
+		182A13032B8F42A000535F19 /* PlaceBallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A13022B8F42A000535F19 /* PlaceBallScene.swift */; };
 		188755512B8630450005CC30 /* ClassicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755502B8630450005CC30 /* ClassicVC.swift */; };
 		188755572B8630CF0005CC30 /* ClassicScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755562B8630CF0005CC30 /* ClassicScene.swift */; };
 		1887555A2B863C020005CC30 /* CusomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755592B863C020005CC30 /* CusomButton.swift */; };
@@ -48,6 +54,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		182A12F72B8F355800535F19 /* LoadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadVC.swift; sourceTree = "<group>"; };
+		182A12F92B8F355E00535F19 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
+		182A12FC2B8F428400535F19 /* CatchBallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchBallVC.swift; sourceTree = "<group>"; };
+		182A12FE2B8F428C00535F19 /* CatchBallScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchBallScene.swift; sourceTree = "<group>"; };
+		182A13002B8F429900535F19 /* PlaceBallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBallVC.swift; sourceTree = "<group>"; };
+		182A13022B8F42A000535F19 /* PlaceBallScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBallScene.swift; sourceTree = "<group>"; };
 		188755502B8630450005CC30 /* ClassicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicVC.swift; sourceTree = "<group>"; };
 		188755562B8630CF0005CC30 /* ClassicScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicScene.swift; sourceTree = "<group>"; };
 		188755592B863C020005CC30 /* CusomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusomButton.swift; sourceTree = "<group>"; };
@@ -101,6 +113,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		182A12F62B8F354500535F19 /* Load */ = {
+			isa = PBXGroup;
+			children = (
+				182A12F72B8F355800535F19 /* LoadVC.swift */,
+				182A12F92B8F355E00535F19 /* LoadView.swift */,
+			);
+			path = Load;
+			sourceTree = "<group>";
+		};
 		188755582B863BE40005CC30 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +184,8 @@
 		18C6E31D2B7F55F50066BB89 /* Place Ball */ = {
 			isa = PBXGroup;
 			children = (
+				182A13002B8F429900535F19 /* PlaceBallVC.swift */,
+				182A13022B8F42A000535F19 /* PlaceBallScene.swift */,
 			);
 			path = "Place Ball";
 			sourceTree = "<group>";
@@ -170,6 +193,8 @@
 		18C6E31E2B7F55FB0066BB89 /* Catch Ball */ = {
 			isa = PBXGroup;
 			children = (
+				182A12FC2B8F428400535F19 /* CatchBallVC.swift */,
+				182A12FE2B8F428C00535F19 /* CatchBallScene.swift */,
 			);
 			path = "Catch Ball";
 			sourceTree = "<group>";
@@ -295,6 +320,7 @@
 		18D4013C2B7E528000022B43 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
+				182A12F62B8F354500535F19 /* Load */,
 				18D4013D2B7E528A00022B43 /* Home */,
 			);
 			path = Flow;
@@ -396,8 +422,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				182A12FF2B8F428C00535F19 /* CatchBallScene.swift in Sources */,
 				18D401432B7E52A600022B43 /* HomeVC.swift in Sources */,
 				18C6E33E2B7F56D00066BB89 /* BonusView.swift in Sources */,
+				182A12F82B8F355800535F19 /* LoadVC.swift in Sources */,
+				182A12FD2B8F428400535F19 /* CatchBallVC.swift in Sources */,
 				18C6E32E2B7F56980066BB89 /* InfoView.swift in Sources */,
 				18C6E33C2B7F56CC0066BB89 /* BonusVC.swift in Sources */,
 				18C6E34D2B7F9E0B0066BB89 /* CongratilationView.swift in Sources */,
@@ -416,11 +445,14 @@
 				18C6E31C2B7F55E80066BB89 /* ChoseView.swift in Sources */,
 				188755572B8630CF0005CC30 /* ClassicScene.swift in Sources */,
 				18D401452B7E53B400022B43 /* Font + Extension.swift in Sources */,
+				182A12FA2B8F355E00535F19 /* LoadView.swift in Sources */,
 				18C6E34B2B7F9E060066BB89 /* CongratilationVC.swift in Sources */,
 				18C6E3382B7F56BF0066BB89 /* LeaderboardVC.swift in Sources */,
 				188755512B8630450005CC30 /* ClassicVC.swift in Sources */,
 				18C6E3302B7F56A00066BB89 /* SetupsVC.swift in Sources */,
+				182A13032B8F42A000535F19 /* PlaceBallScene.swift in Sources */,
 				18C6E3432B7F5AF60066BB89 /* Settings.swift in Sources */,
+				182A13012B8F429900535F19 /* PlaceBallVC.swift in Sources */,
 				18C6E3362B7F56B40066BB89 /* BuyView.swift in Sources */,
 				1887555C2B8643BC0005CC30 /* CustomSKSpriteNode.swift in Sources */,
 				1887555A2B863C020005CC30 /* CusomButton.swift in Sources */,

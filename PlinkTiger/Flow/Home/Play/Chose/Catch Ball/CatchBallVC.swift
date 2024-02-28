@@ -1,15 +1,14 @@
 //
-//  ClassicVC.swift
-//  PlinkTiger
+//  CatchBallVC.swift
 
 
 import UIKit
 import SpriteKit
 import SnapKit
 
-final class ClassicVC: UIViewController {
-    private let gameSceneView = SKView()
-    public var gameScene: ClassicScene!
+final class CatchBallVC: UIViewController {
+    private let catchSceneView = SKView()
+    public var catchScene: CatchBallScene!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,21 +24,21 @@ final class ClassicVC: UIViewController {
 
 // MARK: - Setup Subviews
 
-extension ClassicVC {
+extension CatchBallVC {
     private func setupGameScene() {
         let size = CGSize(width: view.bounds.width, height: view.bounds.height)
-        gameScene = ClassicScene(size: size)
-        gameScene.scaleMode = .aspectFill
+        catchScene = CatchBallScene(size: size)
+        catchScene.scaleMode = .aspectFill
         
-        gameSceneView.ignoresSiblingOrder = true
-        gameSceneView.backgroundColor = .clear
-        gameSceneView.presentScene(gameScene)
-        view.addSubview(gameSceneView)
+        catchSceneView.ignoresSiblingOrder = true
+        catchSceneView.backgroundColor = .clear
+        catchSceneView.presentScene(catchScene)
+        view.addSubview(catchSceneView)
         
     }
     
     private func setConstraints() {
-        gameSceneView.snp.makeConstraints { make in
+        catchSceneView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -47,9 +46,9 @@ extension ClassicVC {
 
 // MARK: - Complition result game
 
-extension ClassicVC {
+extension CatchBallVC {
     private func receivingResultComplition() {
-        gameScene.resultTransfer = { [weak self] result in
+        catchScene.resultCatch = { [weak self] result in
             guard let self else { return }
             if result == .back {
                 navigationController?.popViewController(animated: true)

@@ -1,15 +1,15 @@
 //
-//  ClassicVC.swift
-//  PlinkTiger
+//  PlaceBallVC.swift
+
 
 
 import UIKit
 import SpriteKit
 import SnapKit
 
-final class ClassicVC: UIViewController {
-    private let gameSceneView = SKView()
-    public var gameScene: ClassicScene!
+final class PlaceBallVC: UIViewController {
+    private let placeSceneView = SKView()
+    public var placeScene: PlaceBallScene!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,21 +25,21 @@ final class ClassicVC: UIViewController {
 
 // MARK: - Setup Subviews
 
-extension ClassicVC {
+extension PlaceBallVC {
     private func setupGameScene() {
         let size = CGSize(width: view.bounds.width, height: view.bounds.height)
-        gameScene = ClassicScene(size: size)
-        gameScene.scaleMode = .aspectFill
+        placeScene = PlaceBallScene(size: size)
+        placeScene.scaleMode = .aspectFill
         
-        gameSceneView.ignoresSiblingOrder = true
-        gameSceneView.backgroundColor = .clear
-        gameSceneView.presentScene(gameScene)
-        view.addSubview(gameSceneView)
+        placeSceneView.ignoresSiblingOrder = true
+        placeSceneView.backgroundColor = .clear
+        placeSceneView.presentScene(placeScene)
+        view.addSubview(placeSceneView)
         
     }
     
     private func setConstraints() {
-        gameSceneView.snp.makeConstraints { make in
+        placeSceneView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -47,9 +47,9 @@ extension ClassicVC {
 
 // MARK: - Complition result game
 
-extension ClassicVC {
+extension PlaceBallVC {
     private func receivingResultComplition() {
-        gameScene.resultTransfer = { [weak self] result in
+        placeScene.resultPlace = { [weak self] result in
             guard let self else { return }
             if result == .back {
                 navigationController?.popViewController(animated: true)
