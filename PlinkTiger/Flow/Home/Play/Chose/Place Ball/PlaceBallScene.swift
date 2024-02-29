@@ -40,8 +40,7 @@ class PlaceBallScene: SKScene {
     var memory: Memory = .shared
     
     private var ball = SKSpriteNode()
-    private var greenSprite = SKSpriteNode()
-    private var dropButton = CustomSKButton(texture: SKTexture(imageNamed: "throwSKBtn"))
+    var greenSprite: SKSpriteNode!
     private var balanceLabel = SKLabelNode()
     private var meatLifeLabel = SKLabelNode()
     private var segmentArray = [SKShapeNode]()
@@ -50,7 +49,7 @@ class PlaceBallScene: SKScene {
     private var workItem: DispatchWorkItem?
     
     
-    private var popupActive: Bool = false
+     var popupActive: Bool = false
     public var resultPlace: ((placeState) -> Void)?
         
     var pinsArray: [SKSpriteNode] = []
@@ -131,7 +130,6 @@ class PlaceBallScene: SKScene {
         createPegsRight()
         setupBackground()
         setupNavigation()
-        setupBottomBar()
         configureGame()
     }
         
@@ -175,7 +173,6 @@ class PlaceBallScene: SKScene {
         greenSprite.position = CGPoint(x: size.width / 2, y: size.height - 150)
         greenSprite.zPosition = 10 // Чтобы спрайт был ниже пинов
         addChild(greenSprite)
-        greenSprite.isUserInteractionEnabled = true
 
 
         let balancBgNode = SKSpriteNode(imageNamed: "scoreImg")
@@ -228,31 +225,7 @@ class PlaceBallScene: SKScene {
         meatBgNode.addChild(meatImageNode)
 
     }
-    
-    private func setupBottomBar() {
-        dropButton.size = .init(width: 340.autoSize, height: 48.autoSize)
-        dropButton.anchorPoint = .init(x: 0.5, y: 0.5)
-        
-        let bottomMargin: CGFloat = 60
-        let verticalPosition = bottomMargin + dropButton.size.height / 2
-        
-        dropButton.position = CGPoint(x: size.width / 2, y: verticalPosition)
-        dropButton.action = { self.dropButtonButtonAction() }
-        
-        addChild(dropButton)
-    }
-    
-    func setupWinPanelAnimation(position: CGPoint) -> SKSpriteNode {
-        let position = CGPoint(x: position.x, y: position.y + 9)
-        let winPanel = SKSpriteNode(imageNamed: "balImg")
-        winPanel.size = .init(width: 20.autoSize, height: 20.autoSize)
-        winPanel.position = position
-        winPanel.zPosition = 12
-        winPanel.name = "winPanel"
-        winPanelAnimationArray.append(winPanel)
-        addChild(winPanel)
-        return winPanel
-    }
+ 
     //MARK: -  Create WinLabel
     
     func setupWinLabelAnimation(text: String) -> SKLabelNode {
@@ -283,6 +256,7 @@ class PlaceBallScene: SKScene {
         ball.name = "ball"
         addChild(ball)
     }
+    
     //MARK: create Walls
     func addSideWalls() {
         let leftWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
@@ -432,10 +406,30 @@ class PlaceBallScene: SKScene {
             addChild(orderLabel)
         }
     }
+    
+    func createBall(at position: CGPoint) {
+        balance -= bet // Уменьшаем баланс при создании мяча
+        
+        let ball = SKSpriteNode(imageNamed: "balImg")
+        ball.size = CGSize(width: 15.autoSize, height: 15.autoSize)
+        ball.position = position
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: 4.autoSize)
+        ball.physicsBody?.isDynamic = true
+        ball.physicsBody?.affectedByGravity = true
+        ball.physicsBody?.categoryBitMask = PhysicsCategory.ball
+        ball.physicsBody?.collisionBitMask = PhysicsCategory.block | PhysicsCategory.winPanel | PhysicsCategory.field
+        ball.physicsBody?.contactTestBitMask = PhysicsCategory.winPanel | PhysicsCategory.field
+        ball.physicsBody?.mass = 1.4
+        ball.physicsBody?.restitution = 0.2
+        ball.zPosition = 11
+        ball.name = "ball"
+        addChild(ball)
+    }
 }
 
-// MARK: - Actions
 
+
+// MARK: - Actions
 extension PlaceBallScene {
     @objc private func settingsButtonAction() {
         guard popupActive == false else { return }
@@ -447,28 +441,11 @@ extension PlaceBallScene {
         resultPlace?(.back)
     }
     
-     private func checkLifes() {
+      func checkLifes() {
         guard popupActive == false else { return }
          resultPlace?(.nolifes)
     }
 
-    @objc private func dropButtonButtonAction() {
-        guard popupActive == false else { return }
-        if memory.scoreMeat > 0 {
-            popupActive = true     // - сдесь блокируем нажатия когда идет падение мячика
-            
-            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
-                guard let self else { return }
-                
-                self.createBall(countBall: 1)
-            }
-        } else {
-            checkLifes()
-            print("No lifes")
-        }
-    }
-
-    
     func removeAllPins() {
         for pin in pinsArray {
             pin.removeFromParent()
@@ -526,6 +503,31 @@ extension PlaceBallScene {
 
 extension PlaceBallScene: SKPhysicsContactDelegate {
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+        for touch in touches {
+            let location = touch.location(in: self)
+            
+            // Проверяем, попало ли касание на greenSprite
+            if greenSprite.contains(location) {
+                guard let touch = touches.first else { return }
+                guard popupActive == false else { return }
+                    if Memory.shared.scoreMeat > 0 {
+                        popupActive = true     // - сдесь блокируем нажатия когда идет падение мячика
+        
+                        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
+                            guard let self else { return }
+        
+                            self.createBall(at: location)
+                        }
+                    } else {
+                        checkLifes()
+                        print("No lifes")
+                    }
+            }
+        }
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         let otherBody = contact.bodyA.node
         let ballBody = contact.bodyB.node
@@ -576,10 +578,8 @@ extension PlaceBallScene {
             ballBody.removeFromParent()
             removeAllwinLabelAnimation()
             let winCount = countingWinnings(winPanelBody: winPanel)
-            let winPanel = setupWinPanelAnimation(position: winPanel.position)
             let winLabel = setupWinLabelAnimation(text: "+\(winCount) POINTS")
             let sequence = animationSector(sectorAnimation: winPanel, kay: "balImg", timePerFrame: 0.7)
-            winPanel.run(sequence, withKey: "balImg")
             
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) { [weak self] in
                 guard let self else { return }
@@ -626,6 +626,7 @@ extension PlaceBallScene {
         return winCount
     }
 }
+
 
 // MARK: - Animation
 extension PlaceBallScene {

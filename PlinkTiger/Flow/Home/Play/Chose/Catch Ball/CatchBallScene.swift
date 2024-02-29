@@ -41,7 +41,7 @@ class CatchBallScene: SKScene {
     var memory: Memory = .shared
     
     private var ball = SKSpriteNode()
-//    private var dropButton = CustomSKButton(texture: SKTexture(imageNamed: "throwSKBtn"))
+    private var dropButton = CustomSKButton(texture: SKTexture(imageNamed: "throwSKBtnCatch"))
     private var leftButton = CustomSKButton(texture: SKTexture(imageNamed: "btnBack"))
     private var rightButton = CustomSKButton(texture: SKTexture(imageNamed: "rightBtn"))
     private var balanceLabel = SKLabelNode()
@@ -54,7 +54,9 @@ class CatchBallScene: SKScene {
     
     private var popupActive: Bool = false
     public var resultCatch: ((catchState) -> Void)?
-        
+    
+    var ballFirstCollisions: [String: Bool] = [:] // Словарь для хранения состояний первого столкновения для каждого мяча
+    var ballCollisionsWithPeg = 0 // Хранит количество столкновений мяча с peg
     var pinsArray: [SKSpriteNode] = []
     var pegArray: [SKSpriteNode] = []
     var winPanelAnimationArray: [SKSpriteNode] = []
@@ -134,8 +136,8 @@ class CatchBallScene: SKScene {
         setupBottomBar()
         configureGame()
     }
-        
-     func updateCoinsBalance() {
+    
+    func updateCoinsBalance() {
         meatLifeLabel.text = String(balance)
         balanceLabel.text = String(memory.scoreCoints)
     }
@@ -199,7 +201,7 @@ class CatchBallScene: SKScene {
         meatBgNode.position = CGPoint(x: size.width - 40, y: size.height - 60)
         meatBgNode.zPosition = 10
         addChild(meatBgNode)
-
+        
         meatLifeLabel = SKLabelNode(text: "\(memory.scoreMeat)")
         meatLifeLabel.fontName = "Lato-Medium"
         meatLifeLabel.fontSize = 18.autoSize
@@ -219,30 +221,34 @@ class CatchBallScene: SKScene {
         meatImageNode.position = CGPoint(x: -meatBgNode.size.width / 2 - 15, y: meatBgNode.size.height / 2 - 50)
         meatImageNode.zPosition = meatBgNode.zPosition + 1
         meatBgNode.addChild(meatImageNode)
-
+        
     }
     
     private func setupBottomBar() {
-//        dropButton.size = .init(width: 340.autoSize, height: 48.autoSize)
-//        dropButton.anchorPoint = .init(x: 0.5, y: 0.5)
-//        let bottomMargin: CGFloat = 60
-//        let verticalPosition = bottomMargin + dropButton.size.height / 2
-//        dropButton.position = CGPoint(x: size.width / 2, y: verticalPosition)
-//        dropButton.action = { self.dropButtonButtonAction() }
-//        addChild(dropButton)
+        dropButton.size = .init(width: 200.autoSize, height: 48.autoSize)
+        dropButton.anchorPoint = .init(x: 0.5, y: 0.5)
+        let bottomMarginDrop: CGFloat = 60
+        let verticalPositionDrop = bottomMarginDrop + dropButton.size.height / 2
+        dropButton.position = CGPoint(x: size.width / 2, y: verticalPositionDrop)
+        dropButton.action = { self.dropButtonButtonAction() }
+        addChild(dropButton)
         leftButton.size = .init(width: 48.autoSize, height: 48.autoSize)
         leftButton.anchorPoint = .init(x: 0, y: 0.5)
         let bottomMargin: CGFloat = 60
         let verticalPosition = bottomMargin + leftButton.size.height / 2
         leftButton.position = CGPoint(x: 28, y: verticalPosition)
-        leftButton.action = { self.dropButtonButtonAction() }
+        leftButton.action = {
+            self.movePegLeft()
+        }
         addChild(leftButton)
         rightButton.size = .init(width: 48.autoSize, height: 48.autoSize)
         rightButton.anchorPoint = .init(x: 1.0, y: 0.5)
         let screenWidth = self.size.width
         let horizontalPositionRight = screenWidth - rightButton.size.width / 2
         rightButton.position = CGPoint(x: horizontalPositionRight, y: verticalPosition)
-        rightButton.action = { self.dropButtonButtonAction() }
+        rightButton.action = {
+            self.movePegRight()
+        }
         addChild(rightButton)
     }
     
@@ -268,7 +274,7 @@ class CatchBallScene: SKScene {
         addChild(winLabe)
         return winLabe
     }
-
+    
     func setupBall(positionBall: CGPoint) {
         ball = SKSpriteNode(imageNamed: "balImg")
         ball.anchorPoint = .init(x: 0.5, y: 0.5)
@@ -288,44 +294,44 @@ class CatchBallScene: SKScene {
     }
     
     //MARK: create Board
-        func createPlinkoBoard() {
-            let numberOfRows = 13
-            let numberOfPinsPerRow = 11
-            let pinSize: CGFloat = 12
-            let spacingX: CGFloat = 30
-            let spacingY: CGFloat = 30
-            let startX = size.width / 2
-            let startY = size.height - 200
-            
-            for row in 0..<numberOfRows {
-                for col in 0..<numberOfPinsPerRow {
-                    var x: CGFloat
-                    if row % 2 == 0 {
-                        // Для четных строк добавляем смещение на половину ширины пина
-                        x = startX - CGFloat(numberOfPinsPerRow - 1) * spacingX / 2 + CGFloat(col) * spacingX
-                    } else {
-                        // Для нечетных строк располагаем пины без смещения
-                        x = startX - CGFloat(numberOfPinsPerRow - 1) * spacingX / 2 + CGFloat(col) * spacingX + spacingX / 2
-
-                    }
-                    let y = startY - CGFloat(row) * spacingY
+    func createPlinkoBoard() {
+        let numberOfRows = 13
+        let numberOfPinsPerRow = 11
+        let pinSize: CGFloat = 12
+        let spacingX: CGFloat = 30
+        let spacingY: CGFloat = 30
+        let startX = size.width / 2
+        let startY = size.height - 200
+        
+        for row in 0..<numberOfRows {
+            for col in 0..<numberOfPinsPerRow {
+                var x: CGFloat
+                if row % 2 == 0 {
+                    // Для четных строк добавляем смещение на половину ширины пина
+                    x = startX - CGFloat(numberOfPinsPerRow - 1) * spacingX / 2 + CGFloat(col) * spacingX
+                } else {
+                    // Для нечетных строк располагаем пины без смещения
+                    x = startX - CGFloat(numberOfPinsPerRow - 1) * spacingX / 2 + CGFloat(col) * spacingX + spacingX / 2
                     
-                    let pin = SKSpriteNode(imageNamed: "pegImg")
-                    pin.position = CGPoint(x: x, y: y)
-                    pin.size = CGSize(width: pinSize, height: pinSize)
-                    pin.physicsBody = SKPhysicsBody(circleOfRadius: pinSize / 2)
-                    pin.physicsBody?.isDynamic = false
-                    
-                    pin.physicsBody?.categoryBitMask = PhysicsCategory.block
-                    pin.physicsBody?.contactTestBitMask = PhysicsCategory.ball
-                    pin.physicsBody?.collisionBitMask = PhysicsCategory.ball
-                    
-                    pin.zPosition = 11
-                    addChild(pin)
                 }
+                let y = startY - CGFloat(row) * spacingY
+                
+                let pin = SKSpriteNode(imageNamed: "pegImg")
+                pin.position = CGPoint(x: x, y: y)
+                pin.size = CGSize(width: pinSize, height: pinSize)
+                pin.physicsBody = SKPhysicsBody(circleOfRadius: pinSize / 2)
+                pin.physicsBody?.isDynamic = false
+                
+                pin.physicsBody?.categoryBitMask = PhysicsCategory.block
+                pin.physicsBody?.contactTestBitMask = PhysicsCategory.ball
+                pin.physicsBody?.collisionBitMask = PhysicsCategory.ball
+                
+                pin.zPosition = 11
+                addChild(pin)
             }
         }
-
+    }
+    
     //MARK: create Walls
     func addSideWalls() {
         let leftWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
@@ -351,30 +357,30 @@ class CatchBallScene: SKScene {
     func createPeg() {
         
         let pegSize = CGSize(width: 120, height: 48)
-          let colorPeg = UIColor.customDarkRed
-          
-          let startX = size.width / 2
-          let centerY = size.height / 2 - 240 // Отступ от центра Y на 60 пунктов вниз
-          
-          let peg = RoundedCornerSpriteNode(color: colorPeg, size: pegSize, cornerRadius: 8, borderWidth: 5, borderColor: .customBrown)
-          peg.position = CGPoint(x: startX, y: centerY) // Центрируем по X и устанавливаем по Y с учетом отступа
-          peg.physicsBody = SKPhysicsBody(rectangleOf: pegSize)
-          peg.physicsBody?.isDynamic = false
-          peg.physicsBody?.categoryBitMask = PhysicsCategory.winPanel
-          peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
-          peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
-          peg.name = "peg_center" // Можно использовать другое имя, если нужно
-          peg.zPosition = 11
-          addChild(peg)
-          
-          let orderLabel = SKLabelNode(text: "x5")
-          orderLabel.fontName = "Lato-Black"
-          orderLabel.fontSize = 28 // Используем фиксированный размер, поскольку он не изменяется
-          orderLabel.position = CGPoint(x: peg.position.x, y: peg.position.y - 10) // Располагаем над peg с учетом отступа
-          orderLabel.zPosition = 12
-          addChild(orderLabel)
-        }
+        let colorPeg = UIColor.customDarkRed
+        
+        let startX = size.width / 2
+        let centerY = size.height / 2 - 240 // Отступ от центра Y на 60 пунктов вниз
+        
+        let peg = RoundedCornerSpriteNode(color: colorPeg, size: pegSize, cornerRadius: 8, borderWidth: 5, borderColor: .customBrown)
+        peg.position = CGPoint(x: startX, y: centerY) // Центрируем по X и устанавливаем по Y с учетом отступа
+        peg.physicsBody = SKPhysicsBody(rectangleOf: pegSize)
+        peg.physicsBody?.isDynamic = false
+        peg.physicsBody?.categoryBitMask = PhysicsCategory.winPanel
+        peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
+        peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        peg.name = "peg_center" // Можно использовать другое имя, если нужно
+        peg.zPosition = 11
+        addChild(peg)
+        
+        let orderLabel = SKLabelNode(text: "x5")
+        orderLabel.fontName = "Lato-Black"
+        orderLabel.fontSize = 28.autoSize
+        orderLabel.position = CGPoint(x: 0, y: -10)
+        orderLabel.zPosition = 12
+        peg.addChild(orderLabel)
     }
+}
 
 // MARK: - Actions
 
@@ -389,11 +395,11 @@ extension CatchBallScene {
         resultCatch?(.back)
     }
     
-     private func checkLifes() {
+    private func checkLifes() {
         guard popupActive == false else { return }
-         resultCatch?(.nolifes)
+        resultCatch?(.nolifes)
     }
-
+    
     @objc private func dropButtonButtonAction() {
         guard popupActive == false else { return }
         if memory.scoreMeat > 0 {
@@ -402,14 +408,29 @@ extension CatchBallScene {
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
                 guard let self else { return }
                 
-                self.createBall(countBall: 1)
+                self.createBall(countBall: 5)
             }
         } else {
             checkLifes()
             print("No lifes")
         }
     }
-
+    
+    
+    func movePegLeft() {
+        movePeg(by: -50) // Перемещаем пег влево на 50 пунктов
+    }
+    
+    func movePegRight() {
+        movePeg(by: 50) // Перемещаем пег вправо на 50 пунктов
+    }
+    
+    func movePeg(by distance: CGFloat) {
+        if let peg = findSprite(spriteName: "peg_center") {
+            let moveAction = SKAction.moveBy(x: distance, y: 0, duration: 0.2)
+            peg.run(moveAction)
+        }
+    }
     
     func removeAllPins() {
         for pin in pinsArray {
@@ -457,7 +478,7 @@ extension CatchBallScene {
     func createBall(countBall: Int) {
         balance -= bet * countBall
         for _ in 1...countBall {
-            let random = Double.random(in: -20...20)
+            let random = Double.random(in: -100...100)
             setupBall(positionBall: CGPoint(x: size.width / 2 + random, y: size.height - 120))
         }
     }
@@ -472,9 +493,9 @@ extension CatchBallScene: SKPhysicsContactDelegate {
         let ballBody = contact.bodyB.node
         let firstBodyMask = contact.bodyA.node?.physicsBody?.categoryBitMask
         let secondBodyMask = contact.bodyB.node?.physicsBody?.categoryBitMask
+
         if (firstBodyMask == PhysicsCategory.winPanel && secondBodyMask == PhysicsCategory.ball) ||
             (firstBodyMask == PhysicsCategory.ball && secondBodyMask == PhysicsCategory.winPanel) {
-            
             contactBallAndwinPanel(winPanelBody: otherBody, ballBody: ballBody)
         } else if (firstBodyMask == PhysicsCategory.spring && secondBodyMask == PhysicsCategory.ball) ||
                     (firstBodyMask == PhysicsCategory.ball && secondBodyMask == PhysicsCategory.spring) {
@@ -487,6 +508,8 @@ extension CatchBallScene: SKPhysicsContactDelegate {
         } else if (firstBodyMask == PhysicsCategory.block && secondBodyMask == PhysicsCategory.ball) ||
                     (firstBodyMask == PhysicsCategory.ball && secondBodyMask == PhysicsCategory.block) {
             contactBallAndBlock(blockNode: otherBody)
+            print("Столкновение - \(ballCollisionsWithPeg)")
+
         }
     }
     
@@ -496,10 +519,10 @@ extension CatchBallScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-                        print(" ball.position.y  - \(ball.position.y)")
-            if ball.position.y < 80 {
+//            print(" ball.position.y  - \(ball.position.y)")
+            if ball.position.y < 100 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
-                    ball.removeFromParent()
+                ball.removeFromParent()
                 let isBall = self.checkSprite(spriteName: "ball")
                 if !isBall {
                     self.popupActive = false
@@ -517,10 +540,10 @@ extension CatchBallScene {
             ballBody.removeFromParent()
             removeAllwinLabelAnimation()
             let winCount = countingWinnings(winPanelBody: winPanel)
-            let winPanel = setupWinPanelAnimation(position: winPanel.position)
+            //            let winPanel = setupWinPanelAnimation(position: winPanel.position)
             let winLabel = setupWinLabelAnimation(text: "+\(winCount) POINTS")
             let sequence = animationSector(sectorAnimation: winPanel, kay: "balImg", timePerFrame: 0.7)
-            winPanel.run(sequence, withKey: "balImg")
+            //            winPanel.run(sequence, withKey: "balImg")
             
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) { [weak self] in
                 guard let self else { return }
@@ -559,8 +582,8 @@ extension CatchBallScene {
         case .some(_):
             break
         }
-        memory.scoreCoints += 50 * panelСoefficient
-        var winCount = 50 * panelСoefficient
+        memory.scoreCoints += 50 * 5
+        var winCount = 50 * 5
         print("winCount --- \(winCount)")
         updateCoinsBalance()
         resultCatch?(.updateScoreBackEnd)
@@ -595,27 +618,6 @@ extension CatchBallScene {
         
         let sequence = SKAction.sequence([isHiddenAnimation, repeatAnimation, removeAnimation, removeSprite])
         return sequence
-    }
-    
-    func animationBall() {
-        
-        let numBalls = 1
-        let radius: CGFloat = 10
-        
-        for i in 0..<numBalls {
-            let angle = CGFloat(i) * (2 * CGFloat.pi) / CGFloat(numBalls)
-            let xOffset = radius * cos(angle)
-            let yOffset = radius * sin(angle)
-            
-            let ball = SKSpriteNode(imageNamed: "img_game_ball")
-            ball.size = CGSize(width: 8, height: 8)
-            ball.position = CGPoint(x: size.width / 2 + xOffset , y: size.height / 2 + yOffset + 150)
-            ball.zPosition = 20
-            addChild(ball)
-            
-            let moveAction = createSmoothMovementAction(for: ball, radius: radius)
-            ball.run(moveAction)
-        }
     }
     
     func createRandomMovementAction(for ball: SKSpriteNode, radius: CGFloat) -> SKAction {

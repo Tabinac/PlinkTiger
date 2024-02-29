@@ -35,6 +35,8 @@ extension ClassicVC {
         gameSceneView.backgroundColor = .clear
         gameSceneView.presentScene(gameScene)
         view.addSubview(gameSceneView)
+        gameScene.view?.showsFPS = false
+        gameSceneView.showsPhysics = false
         
     }
     

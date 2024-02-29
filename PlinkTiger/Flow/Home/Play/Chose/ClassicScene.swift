@@ -232,18 +232,6 @@ class ClassicScene: SKScene {
         addChild(dropButton)
     }
     
-    func setupWinPanelAnimation(position: CGPoint) -> SKSpriteNode {
-        let position = CGPoint(x: position.x, y: position.y + 9)
-        let winPanel = SKSpriteNode(imageNamed: "balImg")
-        winPanel.size = .init(width: 20.autoSize, height: 20.autoSize)
-        winPanel.position = position
-        winPanel.zPosition = 12
-        winPanel.name = "winPanel"
-        winPanelAnimationArray.append(winPanel)
-        addChild(winPanel)
-        return winPanel
-    }
-    
     func setupWinLabelAnimation(text: String) -> SKLabelNode {
         let winLabe = SKLabelNode(text: "\(text)")
         winLabe.fontName = "Lato-Bold"
@@ -260,7 +248,7 @@ class ClassicScene: SKScene {
         ball.anchorPoint = .init(x: 0.5, y: 0.5)
         ball.size = .init(width: 15.autoSize, height: 15.autoSize)
         ball.position = positionBall
-        ball.physicsBody = .init(circleOfRadius: 4.autoSize)
+        ball.physicsBody = .init(circleOfRadius: 8.autoSize)
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.affectedByGravity = true
         ball.physicsBody?.categoryBitMask = PhysicsCategory.ball
@@ -585,10 +573,8 @@ extension ClassicScene {
             ballBody.removeFromParent()
             removeAllwinLabelAnimation()
             let winCount = countingWinnings(winPanelBody: winPanel)
-            let winPanel = setupWinPanelAnimation(position: winPanel.position)
             let winLabel = setupWinLabelAnimation(text: "+\(winCount) POINTS")
             let sequence = animationSector(sectorAnimation: winPanel, kay: "balImg", timePerFrame: 0.7)
-            winPanel.run(sequence, withKey: "balImg")
             
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) { [weak self] in
                 guard let self else { return }
