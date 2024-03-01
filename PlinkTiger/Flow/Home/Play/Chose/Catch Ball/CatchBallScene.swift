@@ -39,7 +39,10 @@ struct PhysicsCategoryCatch {
 
 class CatchBallScene: SKScene {
     var memory: Memory = .shared
-    
+    var ballsCollidedWithPanel: Int = 0
+    var winBallCount: Int = 0 // Переменная для хранения последнего значения winBall
+    private var isCodeExecuted = false
+
     private var ball = SKSpriteNode()
     private var dropButton = CustomSKButton(texture: SKTexture(imageNamed: "throwSKBtnCatch"))
     private var leftButton = CustomSKButton(texture: SKTexture(imageNamed: "btnBack"))
@@ -56,7 +59,6 @@ class CatchBallScene: SKScene {
     public var resultCatch: ((catchState) -> Void)?
     
     var ballFirstCollisions: [String: Bool] = [:] // Словарь для хранения состояний первого столкновения для каждого мяча
-    var ballCollisionsWithPeg = 0 // Хранит количество столкновений мяча с peg
     var pinsArray: [SKSpriteNode] = []
     var pegArray: [SKSpriteNode] = []
     var winPanelAnimationArray: [SKSpriteNode] = []
@@ -409,6 +411,7 @@ extension CatchBallScene {
                 guard let self else { return }
                 
                 self.createBall(countBall: 5)
+                ballsCollidedWithPanel = 0
             }
         } else {
             checkLifes()
@@ -508,7 +511,6 @@ extension CatchBallScene: SKPhysicsContactDelegate {
         } else if (firstBodyMask == PhysicsCategory.block && secondBodyMask == PhysicsCategory.ball) ||
                     (firstBodyMask == PhysicsCategory.ball && secondBodyMask == PhysicsCategory.block) {
             contactBallAndBlock(blockNode: otherBody)
-            print("Столкновение - \(ballCollisionsWithPeg)")
 
         }
     }
@@ -519,13 +521,13 @@ extension CatchBallScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-//            print(" ball.position.y  - \(ball.position.y)")
             if ball.position.y < 100 {
-                print(" DELETE BALL !!!!!!!!!!!!!!")
                 ball.removeFromParent()
                 let isBall = self.checkSprite(spriteName: "ball")
                 if !isBall {
                     self.popupActive = false
+                    print("ballsCollidedWithPanel - \(ballsCollidedWithPanel)")
+                    resultCatch?(.updateScoreBackEnd)
                 }
             }
         }
@@ -540,22 +542,21 @@ extension CatchBallScene {
             ballBody.removeFromParent()
             removeAllwinLabelAnimation()
             let winCount = countingWinnings(winPanelBody: winPanel)
-            //            let winPanel = setupWinPanelAnimation(position: winPanel.position)
-            let winLabel = setupWinLabelAnimation(text: "+\(winCount) POINTS")
             let sequence = animationSector(sectorAnimation: winPanel, kay: "balImg", timePerFrame: 0.7)
-            //            winPanel.run(sequence, withKey: "balImg")
             
-            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) { [weak self] in
-                guard let self else { return }
-                self.removeAllwinLabelAnimation()
-            }
+                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) { [weak self] in
+                    guard let self = self else { return }
+                    self.removeAllwinLabelAnimation()
+                }
         }
         let isBall = self.checkSprite(spriteName: "ball")
         if !isBall {
+            print("ballsCollidedWithPanel - \(ballsCollidedWithPanel)")
             self.popupActive = false
+            resultCatch?(.updateScoreBackEnd)
         }
     }
-    
+
     private func contactBallAndBlock(blockNode: SKNode?) {
         guard let blockNode = blockNode as? SKSpriteNode else { return }
     }
@@ -585,8 +586,10 @@ extension CatchBallScene {
         memory.scoreCoints += 50 * 5
         var winCount = 50 * 5
         print("winCount --- \(winCount)")
+        if winCount == 250 {
+            ballsCollidedWithPanel += 250 // Увеличиваем счетчик столкновений
+        }
         updateCoinsBalance()
-        resultCatch?(.updateScoreBackEnd)
         return winCount
     }
 }

@@ -348,7 +348,6 @@ class PlaceBallScene: SKScene {
             peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
             peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
             peg.name = "peg_\(col)"
-            print("\(peg.name)")
             peg.zPosition = 11
             pegArray.append(peg)
             addChild(peg)
@@ -392,7 +391,6 @@ class PlaceBallScene: SKScene {
             peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
             peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
             peg.name = "peg_\(col)"
-            print("\(peg.name)")
             peg.zPosition = 11
             pegArray.append(peg)
             addChild(peg)
@@ -557,7 +555,6 @@ extension PlaceBallScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-                        print(" ball.position.y  - \(ball.position.y)")
             if ball.position.y < 120 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
                     ball.removeFromParent()

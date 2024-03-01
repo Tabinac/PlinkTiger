@@ -331,7 +331,6 @@ class ClassicScene: SKScene {
             peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
             peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
             peg.name = "peg_\(col)"
-            print("\(peg.name)")
             peg.zPosition = 11
             pegArray.append(peg)
             addChild(peg)
@@ -375,7 +374,6 @@ class ClassicScene: SKScene {
             peg.physicsBody?.contactTestBitMask = PhysicsCategory.ball
             peg.physicsBody?.collisionBitMask = PhysicsCategory.ball
             peg.name = "peg_\(col)"
-            print("\(peg.name)")
             peg.zPosition = 11
             pegArray.append(peg)
             addChild(peg)
@@ -424,47 +422,7 @@ extension ClassicScene {
             print("No lifes")
         }
     }
-    
-    @objc func maxBet() {
-        var maxCount = 0
-        maxCount = 1
-        if balance == 0 {
-            dropButton.setActive(active: false)
-            return
-        }
-        
-        if balance <= maxCount {
-            betIndex = 0
-        } else {
-            let canBet = balance
-            let subBet = betSet.filter({ (bet) -> Bool in
-                return bet <= canBet
-            })
-            guard let max = subBet.max() else { return }
-            betIndex = betSet.firstIndex(of: max)!
-        }
-    }
-    
-    @objc func minBet() {
-        var minCount = 0
-        minCount = 1
-        
-        if balance == 0 {
-            dropButton.setActive(active: false)
-            return
-        }
-        
-        if balance <= minCount {
-            betIndex = 0
-        } else {
-            let canBet = balance
-            let subBet = betSet.filter({ (bet) -> Bool in
-                return bet <= canBet
-            })
-            guard let min = subBet.min() else { return }
-            betIndex = betSet.firstIndex(of: min)!
-        }
-    }
+ 
     
     func removeAllPins() {
         for pin in pinsArray {
@@ -552,7 +510,6 @@ extension ClassicScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-                        print(" ball.position.y  - \(ball.position.y)")
             if ball.position.y < 300 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
                     ball.removeFromParent()

@@ -54,7 +54,9 @@ extension CatchBallVC {
                 navigationController?.popViewController(animated: true)
             }
             if result == .updateScoreBackEnd {
-            print("UPDATEBACK")
+                let vc = TotalScoreCatchVC()
+                vc.total = catchScene.ballsCollidedWithPanel
+                navigationController?.pushViewController(vc, animated: true)
             }
             if result == .nolifes {
                 let alert = UIAlertController(title: "Sorry", message: "You don't have enough meat", preferredStyle: .alert)

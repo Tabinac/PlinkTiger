@@ -51,6 +51,8 @@
 		18D401452B7E53B400022B43 /* Font + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D401442B7E53B400022B43 /* Font + Extension.swift */; };
 		18D401472B7E6AAC00022B43 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18D401462B7E6AAC00022B43 /* Lato-Bold.ttf */; };
 		18D401492B7E6ABB00022B43 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18D401482B7E6ABB00022B43 /* Lato-Medium.ttf */; };
+		18D516E92B920A080081517B /* TotalScoreCatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D516E82B920A080081517B /* TotalScoreCatchVC.swift */; };
+		18D516EB2B920A0E0081517B /* TotalScoreCatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D516EA2B920A0E0081517B /* TotalScoreCatchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +101,8 @@
 		18D401442B7E53B400022B43 /* Font + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extension.swift"; sourceTree = "<group>"; };
 		18D401462B7E6AAC00022B43 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		18D401482B7E6ABB00022B43 /* Lato-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Medium.ttf"; sourceTree = "<group>"; };
+		18D516E82B920A080081517B /* TotalScoreCatchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalScoreCatchVC.swift; sourceTree = "<group>"; };
+		18D516EA2B920A0E0081517B /* TotalScoreCatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalScoreCatchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +199,7 @@
 			children = (
 				182A12FC2B8F428400535F19 /* CatchBallVC.swift */,
 				182A12FE2B8F428C00535F19 /* CatchBallScene.swift */,
+				18D516E72B9209E80081517B /* TotalScoreCatch */,
 			);
 			path = "Catch Ball";
 			sourceTree = "<group>";
@@ -340,6 +345,15 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		18D516E72B9209E80081517B /* TotalScoreCatch */ = {
+			isa = PBXGroup;
+			children = (
+				18D516E82B920A080081517B /* TotalScoreCatchVC.swift */,
+				18D516EA2B920A0E0081517B /* TotalScoreCatchView.swift */,
+			);
+			path = TotalScoreCatch;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -432,6 +446,7 @@
 				18C6E34D2B7F9E0B0066BB89 /* CongratilationView.swift in Sources */,
 				18C6E3262B7F56720066BB89 /* ProfileView.swift in Sources */,
 				18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */,
+				18D516E92B920A080081517B /* TotalScoreCatchVC.swift in Sources */,
 				1887555E2B8644B30005CC30 /* Double+Extensions.swift in Sources */,
 				18C6E3492B7F9DFB0066BB89 /* CircleView.swift in Sources */,
 				18D401412B7E529C00022B43 /* HomeView.swift in Sources */,
@@ -453,6 +468,7 @@
 				182A13032B8F42A000535F19 /* PlaceBallScene.swift in Sources */,
 				18C6E3432B7F5AF60066BB89 /* Settings.swift in Sources */,
 				182A13012B8F429900535F19 /* PlaceBallVC.swift in Sources */,
+				18D516EB2B920A0E0081517B /* TotalScoreCatchView.swift in Sources */,
 				18C6E3362B7F56B40066BB89 /* BuyView.swift in Sources */,
 				1887555C2B8643BC0005CC30 /* CustomSKSpriteNode.swift in Sources */,
 				1887555A2B863C020005CC30 /* CusomButton.swift in Sources */,
