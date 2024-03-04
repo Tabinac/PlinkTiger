@@ -50,6 +50,13 @@ class BuyView: UIView {
         return view
     }()
     
+    private lazy var cointsImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .cointsImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     private(set) lazy var scoreCoints: UILabel = {
         let label = UILabel()
         label.text = "\(Memory.shared.scoreCoints)"
@@ -115,6 +122,7 @@ class BuyView: UIView {
         meatConteiner.addSubview(meatImg)
         meatConteiner.addSubview(scoreMeat)
         scoreContainer.addSubview(scoreCoints)
+        scoreContainer.addSubview(cointsImg)
     }
     
     private func setUpConstraints(){
@@ -154,8 +162,15 @@ class BuyView: UIView {
             make.width.equalTo(88)
         }
 
+        cointsImg.snp.makeConstraints { (make) in
+            make.centerY.equalTo(scoreContainer)
+            make.left.equalToSuperview().offset(8)
+            make.size.equalTo(24)
+        }
+        
         scoreCoints.snp.makeConstraints { (make) in
-            make.center.equalTo(scoreContainer)
+            make.centerY.equalTo(scoreContainer)
+            make.right.equalToSuperview().offset(-8)
         }
         
         titleLabel.snp.makeConstraints { (make) in
@@ -173,7 +188,6 @@ class BuyView: UIView {
         totalView.snp.makeConstraints { (make) in
             make.center.equalToSuperview()
         }
-
 
         buyBtn.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().inset(28)

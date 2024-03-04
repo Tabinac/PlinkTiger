@@ -39,7 +39,7 @@ struct PhysicsCategoryCatch {
 
 class CatchBallScene: SKScene {
     var memory: Memory = .shared
-    var ballsCollidedWithPanel: Int = 0
+    var ballsCollidedWithCoints: Int = 0
     var winBallCount: Int = 0 // Переменная для хранения последнего значения winBall
     private var isCodeExecuted = false
 
@@ -129,7 +129,7 @@ class CatchBallScene: SKScene {
     }
     
     private func setupGameSubviews() {
-        print("\(size.width)")
+        print("\(size.height)")
         createPlinkoBoard()
         addSideWalls()
         createPeg()
@@ -193,9 +193,15 @@ class CatchBallScene: SKScene {
             let scale = 65 / balanceLabel.frame.width
             balanceLabel.setScale(scale)
         }
-        balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
+        
+        balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2 + 15, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
         balanceLabel.zPosition = balancBgNode.zPosition + 1
         addChild(balanceLabel)
+        let cointsImageNode = SKSpriteNode(imageNamed: "cointsImg")
+        cointsImageNode.size = CGSize(width: 24, height: 24)
+        cointsImageNode.position = CGPoint(x: balancBgNode.size.width / 2 - 25, y: balancBgNode.size.height / 2 - 50)
+        cointsImageNode.zPosition = balancBgNode.zPosition + 1
+        balancBgNode.addChild(cointsImageNode)
         
         let meatBgNode = SKSpriteNode(imageNamed: "scoreImg")
         meatBgNode.anchorPoint = CGPoint(x: 1.0, y: 1.0)
@@ -288,8 +294,8 @@ class CatchBallScene: SKScene {
         ball.physicsBody?.categoryBitMask = PhysicsCategory.ball
         ball.physicsBody?.collisionBitMask = PhysicsCategory.block | PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.contactTestBitMask = PhysicsCategory.winPanel | PhysicsCategory.field
-        ball.physicsBody?.mass = 1.4
-        ball.physicsBody?.restitution = 0.2
+        ball.physicsBody?.mass = 1.8
+        ball.physicsBody?.restitution = 0.4
         ball.zPosition = 11
         ball.name = "ball"
         addChild(ball)
@@ -297,14 +303,18 @@ class CatchBallScene: SKScene {
     
     //MARK: create Board
     func createPlinkoBoard() {
-        let numberOfRows = 13
+        var numberOfRows = 13
         let numberOfPinsPerRow = 11
         let pinSize: CGFloat = 12
         let spacingX: CGFloat = 30
         let spacingY: CGFloat = 30
-        let startX = size.width / 2
-        let startY = size.height - 200
-        
+        let startX = size.width / 2 - 10
+        var startY = size.height - 200
+        if UIScreen.main.bounds.height < 812 {
+            startY = size.height - 140
+            numberOfRows = 11
+         }
+
         for row in 0..<numberOfRows {
             for col in 0..<numberOfPinsPerRow {
                 var x: CGFloat
@@ -343,6 +353,7 @@ class CatchBallScene: SKScene {
         leftWall.physicsBody?.categoryBitMask = PhysicsCategory.block
         leftWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
         leftWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        leftWall.physicsBody?.restitution = 1.5
         addChild(leftWall)
         
         let rightWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
@@ -352,6 +363,7 @@ class CatchBallScene: SKScene {
         rightWall.physicsBody?.categoryBitMask = PhysicsCategory.block
         rightWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
         rightWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        leftWall.physicsBody?.restitution = 1.5
         addChild(rightWall)
     }
     
@@ -362,10 +374,13 @@ class CatchBallScene: SKScene {
         let colorPeg = UIColor.customDarkRed
         
         let startX = size.width / 2
-        let centerY = size.height / 2 - 240 // Отступ от центра Y на 60 пунктов вниз
+        var centerY = size.height / 2 - 240
+        if UIScreen.main.bounds.height < 812 {
+            centerY = size.height / 2 - 180
+         }
         
         let peg = RoundedCornerSpriteNode(color: colorPeg, size: pegSize, cornerRadius: 8, borderWidth: 5, borderColor: .customBrown)
-        peg.position = CGPoint(x: startX, y: centerY) // Центрируем по X и устанавливаем по Y с учетом отступа
+        peg.position = CGPoint(x: startX, y: centerY)
         peg.physicsBody = SKPhysicsBody(rectangleOf: pegSize)
         peg.physicsBody?.isDynamic = false
         peg.physicsBody?.categoryBitMask = PhysicsCategory.winPanel
@@ -411,7 +426,7 @@ extension CatchBallScene {
                 guard let self else { return }
                 
                 self.createBall(countBall: 5)
-                ballsCollidedWithPanel = 0
+                ballsCollidedWithCoints = 0
             }
         } else {
             checkLifes()
@@ -526,7 +541,7 @@ extension CatchBallScene: SKPhysicsContactDelegate {
                 let isBall = self.checkSprite(spriteName: "ball")
                 if !isBall {
                     self.popupActive = false
-                    print("ballsCollidedWithPanel - \(ballsCollidedWithPanel)")
+                    print("ballsCollidedWithCoints - \(ballsCollidedWithCoints)")
                     resultCatch?(.updateScoreBackEnd)
                 }
             }
@@ -551,7 +566,7 @@ extension CatchBallScene {
         }
         let isBall = self.checkSprite(spriteName: "ball")
         if !isBall {
-            print("ballsCollidedWithPanel - \(ballsCollidedWithPanel)")
+            print("ballsCollidedWithCoints - \(ballsCollidedWithCoints)")
             self.popupActive = false
             resultCatch?(.updateScoreBackEnd)
         }
@@ -587,7 +602,7 @@ extension CatchBallScene {
         var winCount = 50 * 5
         print("winCount --- \(winCount)")
         if winCount == 250 {
-            ballsCollidedWithPanel += 250 // Увеличиваем счетчик столкновений
+            ballsCollidedWithCoints += 100
         }
         updateCoinsBalance()
         return winCount

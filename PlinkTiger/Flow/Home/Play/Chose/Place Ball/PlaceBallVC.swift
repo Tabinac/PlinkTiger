@@ -36,6 +36,9 @@ extension PlaceBallVC {
         placeSceneView.backgroundColor = .clear
         placeSceneView.presentScene(placeScene)
         view.addSubview(placeSceneView)
+        placeScene.view?.showsFPS = false
+        placeSceneView.showsPhysics = false
+
         
     }
     

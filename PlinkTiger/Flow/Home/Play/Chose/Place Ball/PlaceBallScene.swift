@@ -194,8 +194,14 @@ class PlaceBallScene: SKScene {
             balanceLabel.setScale(scale)
         }
         balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
+        balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2 + 15, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
         balanceLabel.zPosition = balancBgNode.zPosition + 1
         addChild(balanceLabel)
+        let cointsImageNode = SKSpriteNode(imageNamed: "cointsImg")
+        cointsImageNode.size = CGSize(width: 24, height: 24)
+        cointsImageNode.position = CGPoint(x: balancBgNode.size.width / 2 - 25, y: balancBgNode.size.height / 2 - 50)
+        cointsImageNode.zPosition = balancBgNode.zPosition + 1
+        balancBgNode.addChild(cointsImageNode)
         
         let meatBgNode = SKSpriteNode(imageNamed: "scoreImg")
         meatBgNode.anchorPoint = CGPoint(x: 1.0, y: 1.0)
@@ -242,16 +248,16 @@ class PlaceBallScene: SKScene {
     func setupBall(positionBall: CGPoint) {
         ball = SKSpriteNode(imageNamed: "balImg")
         ball.anchorPoint = .init(x: 0.5, y: 0.5)
-        ball.size = .init(width: 15.autoSize, height: 15.autoSize)
+        ball.size = .init(width: 20.autoSize, height: 20.autoSize)
         ball.position = positionBall
-        ball.physicsBody = .init(circleOfRadius: 4.autoSize)
+        ball.physicsBody = .init(circleOfRadius: 5.autoSize)
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.affectedByGravity = true
         ball.physicsBody?.categoryBitMask = PhysicsCategory.ball
         ball.physicsBody?.collisionBitMask = PhysicsCategory.block | PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.contactTestBitMask = PhysicsCategory.winPanel | PhysicsCategory.field
-        ball.physicsBody?.mass = 1.4
-        ball.physicsBody?.restitution = 0.2
+        ball.physicsBody?.mass = 1.8
+        ball.physicsBody?.restitution = 0.3
         ball.zPosition = 11
         ball.name = "ball"
         addChild(ball)
@@ -266,6 +272,7 @@ class PlaceBallScene: SKScene {
         leftWall.physicsBody?.categoryBitMask = PhysicsCategory.block
         leftWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
         leftWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        leftWall.physicsBody?.restitution = 3
         addChild(leftWall)
         
         let rightWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
@@ -275,17 +282,23 @@ class PlaceBallScene: SKScene {
         rightWall.physicsBody?.categoryBitMask = PhysicsCategory.block
         rightWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
         rightWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        rightWall.physicsBody?.restitution = 3
         addChild(rightWall)
     }
 
 //MARK: create Board
     func createPlinkoBoard() {
-        let numberOfRows = 16
-        let numberOfPinsPerRow = 11
+        var numberOfRows = 16
+        if UIScreen.main.bounds.height < 812 {
+             numberOfRows = 13
+         } else {
+             numberOfRows = 16
+         }
+        let numberOfPinsPerRow = 12
         let pinSize: CGFloat = 12
         let spacingX: CGFloat = 30
         let spacingY: CGFloat = 30
-        let startX = size.width / 2
+        let startX = size.width / 2 - 10
         let startY = size.height - 200
         
         for row in 0..<numberOfRows {
@@ -555,7 +568,7 @@ extension PlaceBallScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-            if ball.position.y < 120 {
+            if ball.position.y < 60 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
                     ball.removeFromParent()
                 let isBall = self.checkSprite(spriteName: "ball")

@@ -27,11 +27,11 @@ class TotalScoreCatchView: UIView {
     
     private lazy var meatImg: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .meatImg
+        imageView.image = .cointsGroupImg
         return imageView
     }()
     
-    private(set) lazy var scoreMeatLabel: UILabel = {
+    private(set) lazy var scoreCointsLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = .customFont(font: .montserrat, style: .black, size: 48)
@@ -72,7 +72,7 @@ class TotalScoreCatchView: UIView {
     }
     
     private func setupUI() {
-        [bgImage,backBtn,winImg,meatImg,scoreMeatLabel,thanksBtn] .forEach(addSubview(_:))
+        [bgImage,backBtn,winImg,meatImg,scoreCointsLabel,thanksBtn] .forEach(addSubview(_:))
     }
     
     private func setUpConstraints(){
@@ -96,7 +96,7 @@ class TotalScoreCatchView: UIView {
             make.center.equalToSuperview()
         }
 
-        scoreMeatLabel.snp.makeConstraints { (make) in
+        scoreCointsLabel.snp.makeConstraints { (make) in
             make.top.equalTo(meatImg.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
         }

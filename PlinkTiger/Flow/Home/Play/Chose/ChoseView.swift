@@ -122,28 +122,28 @@ class ChoseView: UIView {
         }
         
         backBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4.autoSize)
             make.left.equalToSuperview().offset(24)
             make.size.equalTo(48)
         }
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(backBtn.snp.bottom).offset(40)
+            make.top.equalTo(backBtn.snp.bottom).offset(40.autoSize)
             make.centerX.equalToSuperview()
         }
         
         cloudImg.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(60)
+            make.top.equalTo(titleLabel.snp.bottom).offset(36.autoSize)
         }
 
         classicBtn.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.height.equalTo(80)
-            make.width.equalTo(280)
+            make.height.equalTo(80.autoSize)
+            make.width.equalTo(280.autoSize)
         }
-        
+
         catchBtn.snp.makeConstraints { (make) in
             make.top.equalTo(classicBtn.snp.bottom).offset(40)
             make.centerX.equalToSuperview()

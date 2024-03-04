@@ -122,10 +122,11 @@ class ClassicScene: SKScene {
     }
     
     private func setupGameSubviews() {
-        print("\(size.width)")
+        print("\(size.height)")
         createPlinkoBoard()
         createPegsLeft()
         createPegsRight()
+        addSideWalls()
         setupBackground()
         setupNavigation()
         setupBottomBar()
@@ -186,9 +187,14 @@ class ClassicScene: SKScene {
             let scale = 65 / balanceLabel.frame.width
             balanceLabel.setScale(scale)
         }
-        balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
+        balanceLabel.position = CGPoint(x: balancBgNode.position.x + balancBgNode.size.width / 2 + 15, y: balancBgNode.position.y - balancBgNode.size.height / 2 - 6)
         balanceLabel.zPosition = balancBgNode.zPosition + 1
         addChild(balanceLabel)
+        let cointsImageNode = SKSpriteNode(imageNamed: "cointsImg")
+        cointsImageNode.size = CGSize(width: 24, height: 24)
+        cointsImageNode.position = CGPoint(x: balancBgNode.size.width / 2 - 25, y: balancBgNode.size.height / 2 - 50)
+        cointsImageNode.zPosition = balancBgNode.zPosition + 1
+        balancBgNode.addChild(cointsImageNode)
         
         let meatBgNode = SKSpriteNode(imageNamed: "scoreImg")
         meatBgNode.anchorPoint = CGPoint(x: 1.0, y: 1.0)
@@ -269,7 +275,11 @@ class ClassicScene: SKScene {
         let startY: CGFloat
         let spacingX: CGFloat
         let spacingY: CGFloat
-            numberOfRows = 8
+        if UIScreen.main.bounds.height < 812 {
+             numberOfRows = 8
+         } else {
+             numberOfRows = 9
+         }
             pinSize = 12
             startX = size.width / 2
             startY = size.height - 150
@@ -311,10 +321,16 @@ class ClassicScene: SKScene {
         let startY: CGFloat
         let spacing: CGFloat
             numberOfRows = 4
-            pegsSize = CGSize(width: 40, height: 25)
-            startX = size.width / 2 - 114
-            startY = size.height / 2 - 25
-            spacing = 46
+            pegsSize = CGSize(width: 38, height: 25)
+            startX = size.width / 2 - 116
+        if UIScreen.main.bounds.height < 812 {
+            startY = size.height / 2 - 100
+         } else {
+             startY = size.height / 2 - 60
+         }
+
+        
+            spacing = 48
             fontSize = 12
  
         for col in 1...numberOfRows {
@@ -354,10 +370,14 @@ class ClassicScene: SKScene {
         let startY: CGFloat
         let spacing: CGFloat
             numberOfRows = 4
-            pegsSize = CGSize(width: 40, height: 25)
-            startX = size.width / 2 - 158
-            startY = size.height / 2 - 25
-            spacing = 46
+            pegsSize = CGSize(width: 38, height: 25)
+            startX = size.width / 2 - 170
+        if UIScreen.main.bounds.height < 812 {
+            startY = size.height / 2 - 100
+         } else {
+             startY = size.height / 2 - 60
+         }
+            spacing = 48
             fontSize = 12
         
         for col in 1...numberOfRows {
@@ -386,6 +406,28 @@ class ClassicScene: SKScene {
             pegLabelArray.append(orderLabel)
             addChild(orderLabel)
         }
+    }
+
+    
+    //MARK: create Walls
+    func addSideWalls() {
+        let leftWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
+        leftWall.position = CGPoint(x: 0, y: size.height / 2)
+        leftWall.physicsBody = SKPhysicsBody(rectangleOf: leftWall.size)
+        leftWall.physicsBody?.isDynamic = false
+        leftWall.physicsBody?.categoryBitMask = PhysicsCategory.block
+        leftWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
+        leftWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        addChild(leftWall)
+        
+        let rightWall = SKSpriteNode(color: .clear, size: CGSize(width: 10, height: size.height))
+        rightWall.position = CGPoint(x: size.width, y: size.height / 2)
+        rightWall.physicsBody = SKPhysicsBody(rectangleOf: rightWall.size)
+        rightWall.physicsBody?.isDynamic = false
+        rightWall.physicsBody?.categoryBitMask = PhysicsCategory.block
+        rightWall.physicsBody?.contactTestBitMask = PhysicsCategory.ball
+        rightWall.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        addChild(rightWall)
     }
 }
 
@@ -510,7 +552,7 @@ extension ClassicScene: SKPhysicsContactDelegate {
         }
         
         func checkPositionBall(ball: SKNode) {
-            if ball.position.y < 300 {
+            if ball.position.y < 250 {
                 print(" DELETE BALL !!!!!!!!!!!!!!")
                     ball.removeFromParent()
                 let isBall = self.checkSprite(spriteName: "ball")

@@ -34,6 +34,8 @@ extension CatchBallVC {
         catchSceneView.backgroundColor = .clear
         catchSceneView.presentScene(catchScene)
         view.addSubview(catchSceneView)
+        catchScene.view?.showsFPS = false
+        catchSceneView.showsPhysics = false
         
     }
     
@@ -55,7 +57,7 @@ extension CatchBallVC {
             }
             if result == .updateScoreBackEnd {
                 let vc = TotalScoreCatchVC()
-                vc.total = catchScene.ballsCollidedWithPanel
+                vc.total = catchScene.ballsCollidedWithCoints
                 navigationController?.pushViewController(vc, animated: true)
             }
             if result == .nolifes {

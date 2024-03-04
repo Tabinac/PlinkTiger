@@ -274,6 +274,7 @@ class BonusView: UIView {
         tigetImg.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(timecountLabel.snp.bottom).offset(42)
+            make.size.equalTo(250)
         }
         
         okBtn.snp.makeConstraints { make in

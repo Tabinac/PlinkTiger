@@ -31,7 +31,7 @@ class TotalScoreCatchVC: UIViewController {
     }
     
     private func configureLabel() {
-        contentView.scoreMeatLabel.text = "+\(total)\nCoints"
+        contentView.scoreCointsLabel.text = "+\(total)"
     }
 
     @objc func closeView() {

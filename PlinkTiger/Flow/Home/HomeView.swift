@@ -53,6 +53,13 @@ class HomeView: UIView {
         return view
     }()
     
+    private lazy var cointsImg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = .cointsImg
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     private(set) lazy var scoreCoints: UILabel = {
         let label = UILabel()
         label.text = "\(Memory.shared.scoreCoints)"
@@ -139,6 +146,12 @@ class HomeView: UIView {
         return button
     }()
     
+    private(set) lazy var infoRullesBtn: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(.btnInfo, for: .normal)
+        return button
+    }()
+
     private(set) lazy var profileButtons: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(.btnProfile, for: .normal)
@@ -159,9 +172,10 @@ class HomeView: UIView {
     }
     
     private func setupUI() {
-        [backImage,meatConteiner,scoreContainer,profileButtons,tigerImg,playButtons,getBonusButtons,leadButtons,buyButtons] .forEach(addSubview(_:))
+        [backImage,meatConteiner,scoreContainer,profileButtons,infoRullesBtn,tigerImg,playButtons,getBonusButtons,leadButtons,buyButtons] .forEach(addSubview(_:))
         meatConteiner.addSubview(meatImg)
         meatConteiner.addSubview(scoreMeat)
+        scoreContainer.addSubview(cointsImg)
         scoreContainer.addSubview(scoreCoints)
 
     }
@@ -197,13 +211,26 @@ class HomeView: UIView {
             make.width.equalTo(88)
         }
 
+        cointsImg.snp.makeConstraints { (make) in
+            make.centerY.equalTo(scoreContainer)
+            make.left.equalToSuperview().offset(8)
+            make.size.equalTo(24)
+        }
+        
         scoreCoints.snp.makeConstraints { (make) in
-            make.center.equalTo(scoreContainer)
+            make.centerY.equalTo(scoreContainer)
+            make.right.equalToSuperview().offset(-8)
         }
 
         profileButtons.snp.makeConstraints { (make) in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
             make.right.equalToSuperview().offset(-28)
+            make.size.equalTo(48)
+        }
+
+        infoRullesBtn.snp.makeConstraints { (make) in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4)
+            make.right.equalTo(profileButtons.snp.left).offset(-12)
             make.size.equalTo(48)
         }
         
