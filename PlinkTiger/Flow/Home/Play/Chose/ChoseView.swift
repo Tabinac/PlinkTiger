@@ -147,15 +147,15 @@ class ChoseView: UIView {
         catchBtn.snp.makeConstraints { (make) in
             make.top.equalTo(classicBtn.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
-            make.height.equalTo(80)
-            make.width.equalTo(280)
+            make.height.equalTo(80.autoSize)
+            make.width.equalTo(280.autoSize)
         }
         
         placeBtn.snp.makeConstraints { (make) in
             make.top.equalTo(catchBtn.snp.bottom).offset(40)
             make.centerX.equalToSuperview()
-            make.height.equalTo(80)
-            make.width.equalTo(280)
+            make.height.equalTo(80.autoSize)
+            make.width.equalTo(280.autoSize)
         }
     }
 }

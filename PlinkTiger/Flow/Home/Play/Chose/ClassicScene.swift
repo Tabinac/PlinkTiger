@@ -280,7 +280,7 @@ class ClassicScene: SKScene {
          } else {
              numberOfRows = 9
          }
-            pinSize = 12
+            pinSize = 12.autoSize
             startX = size.width / 2
             startY = size.height - 150
             spacingX = 35
