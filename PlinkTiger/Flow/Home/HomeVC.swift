@@ -40,7 +40,7 @@ class HomeVC: UIViewController {
         contentView.playButtons.addTarget(self, action: #selector(buttonTappedPlay), for: .touchUpInside)
         contentView.getBonusButtons.addTarget(self, action: #selector(buttonTappedGet), for: .touchUpInside)
         contentView.buyButtons.addTarget(self, action: #selector(buttonTappedBuy), for: .touchUpInside)
-
+        contentView.infoRullesBtn.addTarget(self, action: #selector(buttonTappedRulles), for: .touchUpInside)
 //        contentView.leadButtons.addTarget(self, action: #selector(buttonTappedLead), for: .touchUpInside)
     }
     
@@ -62,6 +62,11 @@ class HomeVC: UIViewController {
     @objc func buttonTappedProfile() {
         let profileVC = ProfileVC()
         navigationController?.pushViewController(profileVC, animated: true)
+    }
+    
+    @objc func buttonTappedRulles() {
+        let vc = InfoRullesVC()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
