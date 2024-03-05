@@ -192,7 +192,11 @@ class ClassicScene: SKScene {
         addChild(balanceLabel)
         let cointsImageNode = SKSpriteNode(imageNamed: "cointsImg")
         cointsImageNode.size = CGSize(width: 24, height: 24)
-        cointsImageNode.position = CGPoint(x: balancBgNode.size.width / 2 - 25, y: balancBgNode.size.height / 2 - 50)
+        if UIScreen.main.bounds.height < 812 {
+            cointsImageNode.position = CGPoint(x: balancBgNode.size.width / 2 - 20, y: balancBgNode.size.height / 2 - 40)
+         } else {
+             cointsImageNode.position = CGPoint(x: balancBgNode.size.width / 2 - 25, y: balancBgNode.size.height / 2 - 50)
+         }
         cointsImageNode.zPosition = balancBgNode.zPosition + 1
         balancBgNode.addChild(cointsImageNode)
         
@@ -219,7 +223,11 @@ class ClassicScene: SKScene {
         addChild(meatLifeLabel)
         let meatImageNode = SKSpriteNode(imageNamed: "meatImg")
         meatImageNode.size = CGSize(width: 24, height: 24)
-        meatImageNode.position = CGPoint(x: -meatBgNode.size.width / 2 - 15, y: meatBgNode.size.height / 2 - 50)
+        if UIScreen.main.bounds.height < 812 {
+            meatImageNode.position = CGPoint(x: -meatBgNode.size.width / 2 - 18, y: meatBgNode.size.height / 2 - 40)
+         } else {
+             meatImageNode.position = CGPoint(x: -meatBgNode.size.width / 2 - 25, y: meatBgNode.size.height / 2 - 50)
+         }
         meatImageNode.zPosition = meatBgNode.zPosition + 1
         meatBgNode.addChild(meatImageNode)
 

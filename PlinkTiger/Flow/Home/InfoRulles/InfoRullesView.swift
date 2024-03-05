@@ -30,10 +30,12 @@ class InfoRullesView: UIView {
 
     private lazy var rullesField: UITextView = {
         let textView = UITextView()
-        textView.text = "1.Classic - ... \n\n\n2.CatchBall - ... \n\n\n3.Place Ball - ..."
+        textView.text = "1.Classic - a game in which a ball falls and bounces off round balls, and each ball is worth 50 points, and the price of one ball is 1 meat, conditions: \nPrice of one ball: 1 meat\nPoints for one ball: 50 points.\nThe game is to hit the bonus platforms with the ball and earn points. Every time the ball hits the platforms with a bonus, you get 50 points multiplied by the coefficient by which it will fall. \n\n\n2.CatchBall - game in which you must catch all five balls using the bonus platform, each ball costs 200 points, conditions:\nGame price: 5 meat. \nEach ball caught multiplies its value by 5. Have a fun game!  \n\n\n3.Place Ball - game in which you choose where the ball will start its path and then bounce off round balls, and each ball costs 50 points, and the price of one ball is 1 meat, conditions: \nPrice of one ball: 1 meat \nPoints for one ball: 50 points \nThe game is to hit the bonus platforms with the ball and earn points. Every time the ball hits the platforms with a bonus, you get 50 points multiplied by the coefficient by which it will fall."
         textView.textColor = .white
-        textView.font = .customFont(font: .lato, style: .regular, size: 20)
+        textView.font = .customFont(font: .lato, style: .regular, size: 16)
         textView.backgroundColor = .clear
+        textView.isEditable = false
+        textView.showsVerticalScrollIndicator = false
         return textView
     }()
     
@@ -69,8 +71,8 @@ class InfoRullesView: UIView {
         }
 
         rullesField.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(56.autoSize)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(26.autoSize)
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-60.autoSize)
             make.left.right.equalToSuperview().inset(28.autoSize)
             make.width.equalTo(374.autoSize)
         }
