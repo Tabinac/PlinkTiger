@@ -9,7 +9,7 @@ class LeaderBoardVC: UIViewController {
     
     var users = [User]()
     let getRequestService = GetRequestService.shared
-    private var activityIndicator: UIActivityIndicatorView!
+    private var loader: UIActivityIndicatorView!
 
     private var contentView: LeaderBoardView {
         view as? LeaderBoardView ?? LeaderBoardView()
@@ -21,7 +21,7 @@ class LeaderBoardVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureActivityIndicator()
+        loaderConfigure()
         loadUsers()
         configureTableView()
         tappedButtons()
@@ -38,13 +38,13 @@ class LeaderBoardVC: UIViewController {
         contentView.backBtn.addTarget(self, action: #selector(goButtonTappedBack), for: .touchUpInside)
     }
 
-    private func configureActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .green
-        contentView.addSubview(activityIndicator)
-        activityIndicator.transform = CGAffineTransform(scaleX: 5, y: 5)
-        activityIndicator.snp.makeConstraints { make in
+    private func loaderConfigure() {
+        loader = UIActivityIndicatorView(style: .medium)
+        loader.hidesWhenStopped = true
+        loader.color = .white
+        contentView.addSubview(loader)
+        loader.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        loader.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
@@ -61,16 +61,16 @@ func sorterScoreUsers() {
 }
 
 func loadUsers() {
-    activityIndicator.startAnimating()
+    loader.startAnimating()
     getRequestService.fetchData { [weak self] users in
         guard let self = self else { return }
         self.users = users
         self.contentView.leaderBoardTableView.reloadData()
         self.sorterScoreUsers()
-        self.activityIndicator.stopAnimating()
+        self.loader.stopAnimating()
     } errorCompletion: { [weak self] error in
         guard self != nil else { return }
-        self?.activityIndicator.stopAnimating()
+        self?.loader.stopAnimating()
         
         }
     }

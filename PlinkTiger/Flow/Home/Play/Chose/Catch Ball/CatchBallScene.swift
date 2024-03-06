@@ -607,9 +607,8 @@ extension CatchBallScene {
             break
         }
         memory.scoreCoints += 50 * 5
-        var winCount = 50 * 5
-        print("winCount --- \(winCount)")
-        if winCount == 250 {
+        var winCount = 50 * 4
+        if winCount == 200 {
             ballsCollidedWithCoints += 200
         }
         updateCoinsBalance()

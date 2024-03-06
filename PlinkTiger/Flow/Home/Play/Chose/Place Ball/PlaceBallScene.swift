@@ -299,15 +299,17 @@ class PlaceBallScene: SKScene {
 //MARK: create Board
     func createPlinkoBoard() {
         var numberOfRows = 16
-        if UIScreen.main.bounds.height < 812 {
+        if UIScreen.main.bounds.height  < 812 {
              numberOfRows = 13
          } else {
              numberOfRows = 16
          }
+       
         let numberOfPinsPerRow = 12
-        let pinSize: CGFloat = 12
-        let spacingX: CGFloat = 30
-        let spacingY: CGFloat = 30
+
+        var pinSize: CGFloat = 12
+        let spacingX: CGFloat = 30.autoSize
+        let spacingY: CGFloat = 30.autoSize
         let startX = size.width / 2 - 10
         let startY = size.height - 200
         
@@ -352,9 +354,9 @@ class PlaceBallScene: SKScene {
         let spacing: CGFloat
             numberOfRows = 4
             pegsSize = CGSize(width: 40, height: 25)
-            startX = size.width / 2 - 114
-            startY = size.height / 2 - 260
-            spacing = 46
+            startX = size.width / 2 - 114.autoSize
+            startY = size.height / 2 - 260.autoSize
+            spacing = 46.autoSize
             fontSize = 12
  
         for col in 1...numberOfRows {
@@ -395,9 +397,9 @@ class PlaceBallScene: SKScene {
         let spacing: CGFloat
             numberOfRows = 4
             pegsSize = CGSize(width: 40, height: 25)
-            startX = size.width / 2 - 158
-            startY = size.height / 2 - 260
-            spacing = 46
+            startX = size.width / 2 - 158.autoSize
+            startY = size.height / 2 - 260.autoSize
+            spacing = 46.autoSize
             fontSize = 12
         
         for col in 1...numberOfRows {

@@ -58,11 +58,26 @@ extension ClassicVC {
             }
             if result == .updateScoreBackEnd {
             print("UPDATEBACK")
+                updateScore()
             }
             if result == .nolifes {
                 let alert = UIAlertController(title: "Sorry", message: "You don't have enough meat", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func updateScore() {
+        let payload = UpdatePayload(name: nil, score: Memory.shared.scoreCoints)
+        PostRequestService.shared.updateData(id: Memory.shared.userID!, payload: payload) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    print("Success")
+                case .failure(let failure):
+                    print("Error - \(failure.localizedDescription)")
+                }
             }
         }
     }

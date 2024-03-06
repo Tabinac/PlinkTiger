@@ -31,9 +31,11 @@ class ProfileVC: UIViewController {
     
     @objc func goButtonTappedHome() {
         navigationController?.popViewController(animated: true)
+        updateName()
     }
     
     @objc func goButtonTappedInfo() {
+        updateName()
         let infoVC = InfoVC()
         navigationController?.pushViewController(infoVC, animated: true)
     }
@@ -58,6 +60,21 @@ class ProfileVC: UIViewController {
         }
     }
     
+    private func updateName() {
+        if Memory.shared.userName != nil {
+            let payload = UpdatePayload(name: Memory.shared.userName, score: nil)
+            PostRequestService.shared.updateData(id: Memory.shared.userID!, payload: payload) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        print("Success")
+                    case .failure(let failure):
+                        print("Error - \(failure.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension ProfileVC: UIImagePickerControllerDelegate {

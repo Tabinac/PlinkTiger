@@ -12,6 +12,8 @@ class HomeVC: UIViewController {
 
     private let authRequset = AuthRequestService.shared
     private var activityIndicator: UIActivityIndicatorView!
+    private let memory = Memory.shared
+    private let postService = PostRequestService.shared
 
     
     private var contentView: HomeView {
@@ -55,6 +57,7 @@ class HomeVC: UIViewController {
                 activityIndicator.startAnimating()
                 try await authRequset.authenticate()
                 checkToken()
+                createUserIfNeeded()
                 activityIndicator.stopAnimating()
             } catch {
                 print("Authentication failed. Error: \(error)")
@@ -63,10 +66,21 @@ class HomeVC: UIViewController {
         }
     }
 
+    private func createUserIfNeeded() {
+        if memory.userID == nil {
+            let payload = CreateRequestPayload(name: nil, score: 0)
+            postService.createUser(payload: payload) { [weak self] createResponse in
+                guard let self = self else { return }
+                memory.userID = createResponse.id
+            } errorCompletion: { error in
+                print("Ошибка получени данных с бека")
+            }
+        }
+    }
+    
     private func checkToken() {
         guard let token = authRequset.token else {
             return
-            
         }
     }
 
@@ -76,7 +90,7 @@ class HomeVC: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .red
         contentView.addSubview(activityIndicator)
-        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
+        activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         activityIndicator.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
