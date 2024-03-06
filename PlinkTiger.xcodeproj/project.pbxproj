@@ -15,6 +15,12 @@
 		182A13032B8F42A000535F19 /* PlaceBallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A13022B8F42A000535F19 /* PlaceBallScene.swift */; };
 		186A02FD2B971E1700178AD0 /* InfoRullesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A02FC2B971E1700178AD0 /* InfoRullesVC.swift */; };
 		186A02FF2B971E1C00178AD0 /* InfoRullesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A02FE2B971E1C00178AD0 /* InfoRullesView.swift */; };
+		186A03042B9886AA00178AD0 /* GetRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A03032B9886AA00178AD0 /* GetRequestService.swift */; };
+		186A03062B9886B300178AD0 /* PostRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A03052B9886B300178AD0 /* PostRequestService.swift */; };
+		186A03082B9886C100178AD0 /* AuthRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A03072B9886C100178AD0 /* AuthRequestService.swift */; };
+		186A030A2B9886E700178AD0 /* RequestPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A03092B9886E700178AD0 /* RequestPayload.swift */; };
+		186A030C2B98899500178AD0 /* LeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A030B2B98899500178AD0 /* LeadCell.swift */; };
+		186A030E2B98899C00178AD0 /* LeadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A030D2B98899C00178AD0 /* LeadModel.swift */; };
 		188755512B8630450005CC30 /* ClassicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755502B8630450005CC30 /* ClassicVC.swift */; };
 		188755572B8630CF0005CC30 /* ClassicScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755562B8630CF0005CC30 /* ClassicScene.swift */; };
 		1887555A2B863C020005CC30 /* CusomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188755592B863C020005CC30 /* CusomButton.swift */; };
@@ -66,6 +72,12 @@
 		182A13022B8F42A000535F19 /* PlaceBallScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBallScene.swift; sourceTree = "<group>"; };
 		186A02FC2B971E1700178AD0 /* InfoRullesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoRullesVC.swift; sourceTree = "<group>"; };
 		186A02FE2B971E1C00178AD0 /* InfoRullesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoRullesView.swift; sourceTree = "<group>"; };
+		186A03032B9886AA00178AD0 /* GetRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRequestService.swift; sourceTree = "<group>"; };
+		186A03052B9886B300178AD0 /* PostRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequestService.swift; sourceTree = "<group>"; };
+		186A03072B9886C100178AD0 /* AuthRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestService.swift; sourceTree = "<group>"; };
+		186A03092B9886E700178AD0 /* RequestPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPayload.swift; sourceTree = "<group>"; };
+		186A030B2B98899500178AD0 /* LeadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadCell.swift; sourceTree = "<group>"; };
+		186A030D2B98899C00178AD0 /* LeadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadModel.swift; sourceTree = "<group>"; };
 		188755502B8630450005CC30 /* ClassicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicVC.swift; sourceTree = "<group>"; };
 		188755562B8630CF0005CC30 /* ClassicScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicScene.swift; sourceTree = "<group>"; };
 		188755592B863C020005CC30 /* CusomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CusomButton.swift; sourceTree = "<group>"; };
@@ -139,6 +151,17 @@
 			path = InfoRulles;
 			sourceTree = "<group>";
 		};
+		186A03002B98861000178AD0 /* ServiceNet */ = {
+			isa = PBXGroup;
+			children = (
+				186A03032B9886AA00178AD0 /* GetRequestService.swift */,
+				186A03052B9886B300178AD0 /* PostRequestService.swift */,
+				186A03072B9886C100178AD0 /* AuthRequestService.swift */,
+				186A03092B9886E700178AD0 /* RequestPayload.swift */,
+			);
+			path = ServiceNet;
+			sourceTree = "<group>";
+		};
 		188755582B863BE40005CC30 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +195,8 @@
 			children = (
 				18C6E3372B7F56BF0066BB89 /* LeaderboardVC.swift */,
 				18C6E3392B7F56C40066BB89 /* LeaderboardView.swift */,
+				186A030B2B98899500178AD0 /* LeadCell.swift */,
+				186A030D2B98899C00178AD0 /* LeadModel.swift */,
 			);
 			path = Leader;
 			sourceTree = "<group>";
@@ -258,6 +283,7 @@
 		18C6E33F2B7F57D20066BB89 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				186A03002B98861000178AD0 /* ServiceNet */,
 				18D401442B7E53B400022B43 /* Font + Extension.swift */,
 				18C6E3402B7F58140066BB89 /* Memory.swift */,
 				18C6E3422B7F5AF60066BB89 /* Settings.swift */,
@@ -459,6 +485,7 @@
 				18C6E33C2B7F56CC0066BB89 /* BonusVC.swift in Sources */,
 				18C6E34D2B7F9E0B0066BB89 /* CongratilationView.swift in Sources */,
 				18C6E3262B7F56720066BB89 /* ProfileView.swift in Sources */,
+				186A03082B9886C100178AD0 /* AuthRequestService.swift in Sources */,
 				18D4011D2B7E4FDE00022B43 /* AppDelegate.swift in Sources */,
 				18D516E92B920A080081517B /* TotalScoreCatchVC.swift in Sources */,
 				1887555E2B8644B30005CC30 /* Double+Extensions.swift in Sources */,
@@ -468,6 +495,8 @@
 				186A02FD2B971E1700178AD0 /* InfoRullesVC.swift in Sources */,
 				18C6E3412B7F58140066BB89 /* Memory.swift in Sources */,
 				18C6E3322B7F56A30066BB89 /* SetupsView.swift in Sources */,
+				186A030A2B9886E700178AD0 /* RequestPayload.swift in Sources */,
+				186A03062B9886B300178AD0 /* PostRequestService.swift in Sources */,
 				18C6E32C2B7F56940066BB89 /* InfoVC.swift in Sources */,
 				18C6E33A2B7F56C40066BB89 /* LeaderboardView.swift in Sources */,
 				18C6E31A2B7F55E30066BB89 /* ChoseVC.swift in Sources */,
@@ -478,6 +507,7 @@
 				186A02FF2B971E1C00178AD0 /* InfoRullesView.swift in Sources */,
 				182A12FA2B8F355E00535F19 /* LoadView.swift in Sources */,
 				18C6E34B2B7F9E060066BB89 /* CongratilationVC.swift in Sources */,
+				186A03042B9886AA00178AD0 /* GetRequestService.swift in Sources */,
 				18C6E3382B7F56BF0066BB89 /* LeaderboardVC.swift in Sources */,
 				188755512B8630450005CC30 /* ClassicVC.swift in Sources */,
 				18C6E3302B7F56A00066BB89 /* SetupsVC.swift in Sources */,
@@ -485,6 +515,8 @@
 				18C6E3432B7F5AF60066BB89 /* Settings.swift in Sources */,
 				182A13012B8F429900535F19 /* PlaceBallVC.swift in Sources */,
 				18D516EB2B920A0E0081517B /* TotalScoreCatchView.swift in Sources */,
+				186A030C2B98899500178AD0 /* LeadCell.swift in Sources */,
+				186A030E2B98899C00178AD0 /* LeadModel.swift in Sources */,
 				18C6E3362B7F56B40066BB89 /* BuyView.swift in Sources */,
 				1887555C2B8643BC0005CC30 /* CustomSKSpriteNode.swift in Sources */,
 				1887555A2B863C020005CC30 /* CusomButton.swift in Sources */,

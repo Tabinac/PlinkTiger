@@ -10,6 +10,9 @@ import UIKit
 
 class HomeVC: UIViewController {
 
+    private let authRequset = AuthRequestService.shared
+    private var activityIndicator: UIActivityIndicatorView!
+
     
     private var contentView: HomeView {
         view as? HomeView ?? HomeView()
@@ -22,6 +25,8 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tappedButtons()
+        configureActivityIndicator()
+        authenticateAndCheckToken()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,7 +46,41 @@ class HomeVC: UIViewController {
         contentView.getBonusButtons.addTarget(self, action: #selector(buttonTappedGet), for: .touchUpInside)
         contentView.buyButtons.addTarget(self, action: #selector(buttonTappedBuy), for: .touchUpInside)
         contentView.infoRullesBtn.addTarget(self, action: #selector(buttonTappedRulles), for: .touchUpInside)
-//        contentView.leadButtons.addTarget(self, action: #selector(buttonTappedLead), for: .touchUpInside)
+        contentView.leadButtons.addTarget(self, action: #selector(buttonTappedBoard), for: .touchUpInside)
+    }
+    
+    private func authenticateAndCheckToken() {
+        Task {
+            do {
+                activityIndicator.startAnimating()
+                try await authRequset.authenticate()
+                checkToken()
+                activityIndicator.stopAnimating()
+            } catch {
+                print("Authentication failed. Error: \(error)")
+                activityIndicator.stopAnimating()
+            }
+        }
+    }
+
+    private func checkToken() {
+        guard let token = authRequset.token else {
+            return
+            
+        }
+    }
+
+    
+    private func configureActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .red
+        contentView.addSubview(activityIndicator)
+        activityIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
+        activityIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
     
     @objc func buttonTappedPlay() {
@@ -68,5 +107,11 @@ class HomeVC: UIViewController {
         let vc = InfoRullesVC()
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @objc func buttonTappedBoard() {
+        let boardVC = LeaderBoardVC()
+        navigationController?.pushViewController(boardVC, animated: true)
+    }
+
 }
 
