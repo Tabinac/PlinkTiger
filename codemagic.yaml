@@ -2,8 +2,8 @@ workflows:
   ios-app:
     name: Build iOS App
     environment:
-      xcode: 15.0
-          scripts:
+      xcode: 15.0 # Указать нужную версию Xcode
+    scripts:
       - name: Build iOS project
         script: |
           xcodebuild build -project "PlinkTiger.xcodeproj" -scheme "PlinkTiger" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
