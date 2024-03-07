@@ -59,6 +59,7 @@ extension PlaceBallVC {
                 navigationController?.popViewController(animated: true)
             }
             if result == .updateScoreBackEnd {
+                updateScore()
             print("UPDATEBACK")
             }
             if result == .nolifes {

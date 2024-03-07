@@ -25,6 +25,7 @@ class InfoView: UIView {
         let view = UIView()
         view.backgroundColor = .clear
         view.layer.borderColor = UIColor.customBrown.cgColor
+        view.layer.borderWidth = 2
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
         return view
@@ -49,7 +50,7 @@ class InfoView: UIView {
 
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-                label.text = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+                label.text = "This game combines elements of the classic Plinko game with unique variations called Classic, CatchBall and PlaceBall. The goal of the game is to feed the hungry tiger by releasing balls into the maze of tiles and guiding them to the place where the tiger is waiting for his food.\nRules of the game on the home screen.\nIf you run out of meat, you can always try your luck in our GET BONUS once every 24 hours and get extra meat. We wish you good luck and have a lot of fun."
         label.textColor = .white
         label.font = .customFont(font: .lato, style: .regular, size: 14)
         label.numberOfLines = 0
@@ -102,7 +103,7 @@ class InfoView: UIView {
         homeBtn.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(24)
             make.top.equalToSuperview().offset(56)
-            make.size.equalTo(40)
+            make.size.equalTo(48)
         }
         
         infoScrollView.snp.makeConstraints { make in

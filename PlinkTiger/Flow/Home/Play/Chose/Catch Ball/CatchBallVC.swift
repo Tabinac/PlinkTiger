@@ -56,6 +56,7 @@ extension CatchBallVC {
                 navigationController?.popViewController(animated: true)
             }
             if result == .updateScoreBackEnd {
+                updateScore()
                 let vc = TotalScoreCatchVC()
                 vc.total = catchScene.ballsCollidedWithCoints
                 navigationController?.pushViewController(vc, animated: true)

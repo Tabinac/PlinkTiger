@@ -38,29 +38,25 @@ struct PhysicsCategoryPlace {
 
 class PlaceBallScene: SKScene {
     var memory: Memory = .shared
-    
-    private var ball = SKSpriteNode()
     var greenSprite: SKSpriteNode!
-    private var balanceLabel = SKLabelNode()
-    private var meatLifeLabel = SKLabelNode()
-    private var segmentArray = [SKShapeNode]()
-    private var secondSegmentArray = [SKShapeNode]()
-    
-    private var workItem: DispatchWorkItem?
-    
-    
-     var popupActive: Bool = false
-    public var resultPlace: ((placeState) -> Void)?
-        
+    var popupActive: Bool = false
     var pinsArray: [SKSpriteNode] = []
     var pegArray: [SKSpriteNode] = []
     var winPanelAnimationArray: [SKSpriteNode] = []
     var winLabeAnimationArray: [SKLabelNode] = []
     
+    public var resultPlace: ((placeState) -> Void)?
+
     var pinHitAnimationArray: [SKSpriteNode] = []
     var pegLabelArray: [SKLabelNode] = []
     var pegAnimationState: [SKSpriteNode: Bool] = [:]
-    
+
+    private var ball = SKSpriteNode()
+    private var balanceLabel = SKLabelNode()
+    private var meatLifeLabel = SKLabelNode()
+    private var segmentArray = [SKShapeNode]()
+    private var secondSegmentArray = [SKShapeNode]()
+    private var workItem: DispatchWorkItem?
     private var betSet: [Int] = []
     private var betIndex: Int = 0 {
         didSet {
@@ -169,11 +165,10 @@ class PlaceBallScene: SKScene {
         homeButton.action = { self.backButtonAction() }
         addChild(homeButton)
         
-        greenSprite = SKSpriteNode(color: .customDarkGreen, size: CGSize(width: size.width, height: 60.autoSize))
+        greenSprite = SKSpriteNode(color: .customDarkGreen, size: CGSize(width: size.width, height: 48.autoSize))
         greenSprite.position = CGPoint(x: size.width / 2, y: size.height - 150)
-        greenSprite.zPosition = 10 // Чтобы спрайт был ниже пинов
+        greenSprite.zPosition = 10
         addChild(greenSprite)
-
 
         let balancBgNode = SKSpriteNode(imageNamed: "scoreImg")
         balancBgNode.anchorPoint = CGPoint(x: 0.0, y: 1.0)
@@ -247,8 +242,8 @@ class PlaceBallScene: SKScene {
     func setupWinLabelAnimation(text: String) -> SKLabelNode {
         let winLabe = SKLabelNode(text: "\(text)")
         winLabe.fontName = "Lato-Bold"
-        winLabe.fontSize = 20
-        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 300)
+        winLabe.fontSize = 40
+        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 320.autoSize)
         winLabe.zPosition = 12
         winLabeAnimationArray.append(winLabe)
         addChild(winLabe)
@@ -640,8 +635,8 @@ extension PlaceBallScene {
         case .some(_):
             break
         }
-        memory.scoreCoints += 50 * panelСoefficient
-        var winCount = 50 * panelСoefficient
+        memory.scoreCoints += 40 * panelСoefficient
+        var winCount = 40 * panelСoefficient
         print("winCount --- \(winCount)")
         updateCoinsBalance()
         resultPlace?(.updateScoreBackEnd)

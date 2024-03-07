@@ -67,18 +67,4 @@ extension ClassicVC {
             }
         }
     }
-    
-    private func updateScore() {
-        let payload = UpdatePayload(name: nil, score: Memory.shared.scoreCoints)
-        PostRequestService.shared.updateData(id: Memory.shared.userID!, payload: payload) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(_):
-                    print("Success")
-                case .failure(let failure):
-                    print("Error - \(failure.localizedDescription)")
-                }
-            }
-        }
-    }
 }

@@ -36,3 +36,34 @@ extension UIFont {
             return isScaled ? UIFontMetrics.default.scaledFont(for: font) : font
         }
 }
+
+extension UIViewController {
+     func updateScore() {
+        let payload = UpdatePayload(name: nil, score: Memory.shared.scoreCoints)
+        PostRequestService.shared.updateData(id: Memory.shared.userID!, payload: payload) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    print("Success")
+                case .failure(let failure):
+                    print("Error - \(failure.localizedDescription)")
+                }
+            }
+        }
+    }
+    func updateName() {
+        if Memory.shared.userName != nil {
+            let payload = UpdatePayload(name: Memory.shared.userName, score: nil)
+            PostRequestService.shared.updateData(id: Memory.shared.userID!, payload: payload) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        print("Success")
+                    case .failure(let failure):
+                        print("Error - \(failure.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+}

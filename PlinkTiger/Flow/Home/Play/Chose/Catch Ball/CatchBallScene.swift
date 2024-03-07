@@ -314,10 +314,10 @@ class CatchBallScene: SKScene {
         var numberOfRows = 13
         let numberOfPinsPerRow = 11
         let pinSize: CGFloat = 12
-        let spacingX: CGFloat = 30
-        let spacingY: CGFloat = 30
-        let startX = size.width / 2 - 10
-        var startY = size.height - 200
+        let spacingX: CGFloat = 30.autoSize
+        let spacingY: CGFloat = 30.autoSize
+        let startX = size.width / 2 - 10.autoSize
+        var startY = size.height - 200.autoSize
         if UIScreen.main.bounds.height < 812 {
             startY = size.height - 140
             numberOfRows = 11
@@ -502,7 +502,7 @@ extension CatchBallScene {
     }
     
     func createBall(countBall: Int) {
-        balance -= bet * countBall
+        balance -= bet * 1
         for _ in 1...countBall {
             let random = Double.random(in: -100...100)
             setupBall(positionBall: CGPoint(x: size.width / 2 + random, y: size.height - 120))
@@ -607,9 +607,9 @@ extension CatchBallScene {
             break
         }
         memory.scoreCoints += 50 * 5
-        var winCount = 50 * 4
-        if winCount == 200 {
-            ballsCollidedWithCoints += 200
+        var winCount = 50
+        if winCount == 50 {
+            ballsCollidedWithCoints += 50
         }
         updateCoinsBalance()
         return winCount

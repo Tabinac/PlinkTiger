@@ -10,11 +10,7 @@ import UIKit
 
 class HomeVC: UIViewController {
 
-    private let authRequset = AuthRequestService.shared
-    private var activityIndicator: UIActivityIndicatorView!
     private let memory = Memory.shared
-    private let postService = PostRequestService.shared
-
     
     private var contentView: HomeView {
         view as? HomeView ?? HomeView()
@@ -27,8 +23,6 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tappedButtons()
-        configureActivityIndicator()
-        authenticateAndCheckToken()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,8 +32,8 @@ class HomeVC: UIViewController {
 
     
     private func updateLabels() {
-        contentView.scoreCoints.text = "\(Memory.shared.scoreCoints)"
-        contentView.scoreMeat.text = "\(Memory.shared.scoreMeat)"
+        contentView.scoreCoints.text = "\(memory.scoreCoints)"
+        contentView.scoreMeat.text = "\(memory.scoreMeat)"
 
     }
     private func tappedButtons() {
@@ -49,52 +43,6 @@ class HomeVC: UIViewController {
         contentView.buyButtons.addTarget(self, action: #selector(buttonTappedBuy), for: .touchUpInside)
         contentView.infoRullesBtn.addTarget(self, action: #selector(buttonTappedRulles), for: .touchUpInside)
         contentView.leadButtons.addTarget(self, action: #selector(buttonTappedBoard), for: .touchUpInside)
-    }
-    
-    private func authenticateAndCheckToken() {
-        Task {
-            do {
-                activityIndicator.startAnimating()
-                try await authRequset.authenticate()
-                checkToken()
-                createUserIfNeeded()
-                activityIndicator.stopAnimating()
-            } catch {
-                print("Authentication failed. Error: \(error)")
-                activityIndicator.stopAnimating()
-            }
-        }
-    }
-
-    private func createUserIfNeeded() {
-        if memory.userID == nil {
-            let payload = CreateRequestPayload(name: nil, score: 0)
-            postService.createUser(payload: payload) { [weak self] createResponse in
-                guard let self = self else { return }
-                memory.userID = createResponse.id
-            } errorCompletion: { error in
-                print("Ошибка получени данных с бека")
-            }
-        }
-    }
-    
-    private func checkToken() {
-        guard let token = authRequset.token else {
-            return
-        }
-    }
-
-    
-    private func configureActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .red
-        contentView.addSubview(activityIndicator)
-        activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        activityIndicator.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
     }
     
     @objc func buttonTappedPlay() {

@@ -620,8 +620,8 @@ extension ClassicScene {
         case .some(_):
             break
         }
-        memory.scoreCoints += 50 * panelСoefficient
-        var winCount = 50 * panelСoefficient
+        memory.scoreCoints += 40 * panelСoefficient
+        var winCount = 40 * panelСoefficient
         print("winCount --- \(winCount)")
         updateCoinsBalance()
         resultTransfer?(.updateScoreBackEnd)
