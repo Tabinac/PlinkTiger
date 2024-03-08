@@ -121,8 +121,8 @@ class ChoseView: UIView {
             make.edges.equalToSuperview()
         }
         
-        backBtn.snp.makeConstraints { (make) in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(4.autoSize)
+        backBtn.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(34)
             make.left.equalToSuperview().offset(24)
             make.size.equalTo(48)
         }

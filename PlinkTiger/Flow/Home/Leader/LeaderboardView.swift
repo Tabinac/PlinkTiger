@@ -71,7 +71,7 @@ class LeaderBoardView: UIView {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(backBtn.snp.bottom).offset(24)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(30)
             make.centerX.equalToSuperview()
             make.height.equalTo(66)
         }
@@ -80,7 +80,7 @@ class LeaderBoardView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
             make.centerX.equalToSuperview()
             make.height.equalTo(1)
-            make.width.equalTo(260)
+            make.width.equalTo(240)
         }
 
         leaderBoardTableView.snp.makeConstraints { (make) in

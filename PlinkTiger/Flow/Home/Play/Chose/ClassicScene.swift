@@ -250,7 +250,7 @@ class ClassicScene: SKScene {
         let winLabe = SKLabelNode(text: "\(text)")
         winLabe.fontName = "Lato-Bold"
         winLabe.fontSize = 48
-        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 180)
+        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 260)
         winLabe.zPosition = 12
         winLabeAnimationArray.append(winLabe)
         addChild(winLabe)
@@ -269,7 +269,7 @@ class ClassicScene: SKScene {
         ball.physicsBody?.collisionBitMask = PhysicsCategory.block | PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.contactTestBitMask = PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.mass = 1.4
-        ball.physicsBody?.restitution = 0.2
+        ball.physicsBody?.restitution = 0.5
         ball.zPosition = 11
         ball.name = "ball"
         addChild(ball)
@@ -290,7 +290,7 @@ class ClassicScene: SKScene {
          }
             pinSize = 12.autoSize
             startX = size.width / 2
-            startY = size.height - 150
+            startY = size.height - 260
             spacingX = 35
             spacingY = 35
         
@@ -334,7 +334,7 @@ class ClassicScene: SKScene {
         if UIScreen.main.bounds.height < 812 {
             startY = size.height / 2 - 100
          } else {
-             startY = size.height / 2 - 60
+             startY = size.height / 2 - 160
          }
 
         
@@ -383,7 +383,7 @@ class ClassicScene: SKScene {
         if UIScreen.main.bounds.height < 812 {
             startY = size.height / 2 - 100
          } else {
-             startY = size.height / 2 - 60
+             startY = size.height / 2 - 160
          }
             spacing = 48
             fontSize = 12
@@ -521,8 +521,8 @@ extension ClassicScene {
     func createBall(countBall: Int) {
         balance -= bet * countBall
         for _ in 1...countBall {
-            let random = Double.random(in: -20...20)
-            setupBall(positionBall: CGPoint(x: size.width / 2 + random, y: size.height - 120))
+            let random = Double.random(in: -30...30)
+            setupBall(positionBall: CGPoint(x: size.width / 2 + random, y: size.height - 160))
         }
     }
 }

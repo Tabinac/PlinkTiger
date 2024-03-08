@@ -21,12 +21,19 @@ class ProfileVC: UIViewController {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         tappedButtons()
+        checkFotoLoad()
     }
     
     private func tappedButtons() {
         contentView.backBtn.addTarget(self, action: #selector(goButtonTappedHome), for: .touchUpInside)
         contentView.chosePhotoBtn.addTarget(self, action: #selector(goTakePhoto), for: .touchUpInside)
         contentView.infoButtons.addTarget(self, action: #selector(goButtonTappedInfo), for: .touchUpInside)
+    }
+    
+    private func checkFotoLoad() {
+        if let savedImage = getImageFromLocal() {
+            contentView.chosePhotoBtn.setImage(savedImage, for: .normal)
+        }
     }
     
     @objc func goButtonTappedHome() {

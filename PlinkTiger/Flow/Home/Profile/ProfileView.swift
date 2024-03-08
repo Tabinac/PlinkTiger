@@ -28,6 +28,10 @@ class ProfileView: UIView,UITextFieldDelegate {
     private(set) lazy var chosePhotoBtn: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(.chosePhoto, for: .normal)
+        button.layer.cornerRadius = 15
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.customBrown.cgColor
+        button.clipsToBounds = true
         return button
     }()
     

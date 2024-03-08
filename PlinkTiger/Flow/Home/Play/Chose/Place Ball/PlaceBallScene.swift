@@ -166,7 +166,7 @@ class PlaceBallScene: SKScene {
         addChild(homeButton)
         
         greenSprite = SKSpriteNode(color: .customDarkGreen, size: CGSize(width: size.width, height: 48.autoSize))
-        greenSprite.position = CGPoint(x: size.width / 2, y: size.height - 150)
+        greenSprite.position = CGPoint(x: size.width / 2, y: size.height - 190)
         greenSprite.zPosition = 10
         addChild(greenSprite)
 
@@ -242,8 +242,8 @@ class PlaceBallScene: SKScene {
     func setupWinLabelAnimation(text: String) -> SKLabelNode {
         let winLabe = SKLabelNode(text: "\(text)")
         winLabe.fontName = "Lato-Bold"
-        winLabe.fontSize = 40
-        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 320.autoSize)
+        winLabe.fontSize = 32
+        winLabe.position = CGPoint(x: size.width / 2, y: size.height / 2 - 380.autoSize)
         winLabe.zPosition = 12
         winLabeAnimationArray.append(winLabe)
         addChild(winLabe)
@@ -262,7 +262,7 @@ class PlaceBallScene: SKScene {
         ball.physicsBody?.collisionBitMask = PhysicsCategory.block | PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.contactTestBitMask = PhysicsCategory.winPanel | PhysicsCategory.field
         ball.physicsBody?.mass = 1.8
-        ball.physicsBody?.restitution = 0.3
+        ball.physicsBody?.restitution = 0.4
         ball.zPosition = 11
         ball.name = "ball"
         addChild(ball)
@@ -306,7 +306,7 @@ class PlaceBallScene: SKScene {
         let spacingX: CGFloat = 30.autoSize
         let spacingY: CGFloat = 30.autoSize
         let startX = size.width / 2 - 10
-        let startY = size.height - 200
+        let startY = size.height - 250
         
         for row in 0..<numberOfRows {
             for col in 0..<numberOfPinsPerRow {
@@ -350,7 +350,7 @@ class PlaceBallScene: SKScene {
             numberOfRows = 4
             pegsSize = CGSize(width: 40, height: 25)
             startX = size.width / 2 - 114.autoSize
-            startY = size.height / 2 - 260.autoSize
+            startY = size.height / 2 - 310.autoSize
             spacing = 46.autoSize
             fontSize = 12
  
@@ -393,7 +393,7 @@ class PlaceBallScene: SKScene {
             numberOfRows = 4
             pegsSize = CGSize(width: 40, height: 25)
             startX = size.width / 2 - 158.autoSize
-            startY = size.height / 2 - 260.autoSize
+            startY = size.height / 2 - 310.autoSize
             spacing = 46.autoSize
             fontSize = 12
         
